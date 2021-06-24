@@ -1,0 +1,731 @@
+[    0.000000] Booting Linux on physical CPU 0
+[    0.000000] Linux version 3.4.43-gk (hecong@tdk) (gcc version 4.6.1 (crosstool-NG 1.18.0) ) #18 PREEMPT Mon May 21 16:54:23 CST 2018
+[    0.000000] CPU: ARMv6-compatible processor [410fb767] revision 7 (ARMv7), cr=00c5387d
+[    0.000000] CPU: VIPT aliasing data cache, VIPT aliasing instruction cache
+[    0.000000] Machine: Goke IPC Board
+[    0.000000] Memory policy: ECC disabled, Data cache writeback
+[    0.000000] AHB: 0x90000000  0xf2000000  -- 0x1000000
+[    0.000000] APB: 0xa0000000  0xf3000000  -- 0x1000000
+[    0.000000] PPM: 0xc0000000  0xc0000000  -- 0x200000
+[    0.000000] BSB: 0xc3600000  0xf5000000  -- 0x100000
+[    0.000000] DSP: 0xc3700000  0xf6000000  -- 0x8f0000
+[    0.000000] USR: 0xc3ff0000  0xfe000000  -- 0x10000
+[    0.000000] hal version = 20160804 
+[    0.000000] On node 0 totalpages: 13312
+[    0.000000] free_area_init_node: node 0, pgdat 804eedfc, node_mem_map 80533000
+[    0.000000]   Normal zone: 104 pages used for memmap
+[    0.000000]   Normal zone: 0 pages reserved
+[    0.000000]   Normal zone: 13208 pages, LIFO batch:3
+[    0.000000] pcpu-alloc: s0 r0 d32768 u32768 alloc=1*32768
+[    0.000000] pcpu-alloc: [0] 0 
+[    0.000000] Built 1 zonelists in Zone order, mobility grouping on.  Total pages: 13208
+[    0.000000] Kernel command line: console=ttySGK2,115200 mem=52M init=/linuxrc root=/dev/mtdblock3 rootfstype=squashfs mtdparts=gk_flash:256K(uboot),64K(env),1920K(kernel),2240K(rootfs),11328K(usr),512K(mnt),64K(cfg)
+[    0.000000] PID hash table entries: 256 (order: -2, 1024 bytes)
+[    0.000000] Dentry cache hash table entries: 8192 (order: 3, 32768 bytes)
+[    0.000000] Inode-cache hash table entries: 4096 (order: 2, 16384 bytes)
+[    0.000000] Memory: 52MB = 52MB total
+[    0.000000] Memory: 47392k/47392k available, 5856k reserved, 0K highmem
+[    0.000000] Virtual kernel memory layout:
+[    0.000000]     vector  : 0xffff0000 - 0xffff1000   (   4 kB)
+[    0.000000]     fixmap  : 0xfff00000 - 0xfffe0000   ( 896 kB)
+[    0.000000]     DMA     : 0xff600000 - 0xffe00000   (   8 MB)
+[    0.000000]     vmalloc : 0x83800000 - 0xff000000   (1976 MB)
+[    0.000000]     lowmem  : 0x80000000 - 0x83400000   (  52 MB)
+[    0.000000]     modules : 0x7f000000 - 0x80000000   (  16 MB)
+[    0.000000]       .text : 0x80008000 - 0x804a0000   (4704 kB)
+[    0.000000]       .init : 0x804a0000 - 0x804c4000   ( 144 kB)
+[    0.000000]       .data : 0x804c4000 - 0x804ef6c0   ( 174 kB)
+[    0.000000]        .bss : 0x804ef6e4 - 0x8052e700   ( 253 kB)
+[    0.000000] NR_IRQS:128
+[    0.000000] >> gk init irq vic1...
+[    0.000000] >> gk init irq vic2...
+[    0.000000] gk init vic...
+[    0.000000] mach gk init timer...
+[    0.000000] sched_clock: 32 bits at 100 Hz, resolution 10000000ns, wraps every 4294967286ms
+[    0.000000] Console: colour dummy device 80x30
+[    0.000000] console [ttySGK2] enabled
+[    0.010000] Calibrating delay loop... 597.60 BogoMIPS (lpj=2988032)
+[    0.070000] pid_max: default: 32768 minimum: 301
+[    0.070000] Mount-cache hash table entries: 512
+[    0.080000] CPU: Testing write buffer coherency: ok
+[    0.090000] Setting up static identity map for 0xc05b2eb8 - 0xc05b2ef0
+[    0.100000] NET: Registered protocol family 16
+[    0.100000] init timer...
+[    0.110000] Init HW timer for DSP communication
+[    0.110000] init gpio...
+[    0.120000] ###################################
+[    0.120000] [BOOT VERSION] GK7102S tdks_v1.0 v1.0 
+[    0.130000] [NET  INT_CLK] Internal PHY clock 
+[    0.130000] [GPIO]#############################
+[    0.140000] [GPIO] gpio map get from uboot
+[    0.140000] [GPIO CFG] gpio   count = 63
+[    0.140000] [GPIO CFG] intphy count = 0
+[    0.150000] [GPIO CFG] extphy count = 0
+[    0.150000] [GPIO CFG] IR LED CTL    (undefined)
+[    0.160000] [GPIO CFG] IR CUT1       (undefined)
+[    0.160000] [GPIO CFG] IR CUT2       (undefined)
+[    0.170000] [GPIO CFG] SENSOR Reset  (undefined)
+[    0.170000] [GPIO CFG] PHY Reset     (undefined)
+[    0.180000] [GPIO CFG] PHY Speed Led (undefined)
+[    0.180000] [GPIO CFG] SPI0 EN       (undefined)
+[    0.190000] [GPIO CFG] SPI1 EN       (undefined)
+[    0.190000] [GPIO CFG] USB HOST      (undefined)
+[    0.200000] [GPIO CFG] SD Detect     (22)
+[    0.200000] [GPIO CFG] SD Power      (undefined)
+[    0.210000] [GPIO CFG] SD1 Detect    (undefined)
+[    0.210000] [GPIO CFG] SD1 Power     (undefined)
+[    0.220000] [GPIO CFG] pwm0          (undefined)
+[    0.220000] [GPIO CFG] pwm1          (undefined)
+[    0.230000] [GPIO CFG] pwm2          (undefined)
+[    0.230000] [GPIO CFG] pwm3          (undefined)
+[    0.240000] [GPIO CFG] pwm4          (undefined)
+[    0.240000] [GPIO CFG] pwm5          (undefined)
+[    0.250000] [GPIO CFG] pwm6          (undefined)
+[    0.250000] [GPIO CFG] pwm7          (undefined)
+[    0.260000] [GPIO]#############################
+[    0.260000] gpiochip_add: registered GPIOs 0 to 63 on device: gk-gpio0
+[    0.270000] [GPIO CFG] gpio_00=SF_CS0
+[    0.280000] [GPIO CFG] gpio_04=OUTPUT_1
+[    0.280000] [GPIO CFG] gpio_05=OUTPUT_1
+[    0.280000] [GPIO CFG] gpio_06=OUTPUT_0
+[    0.290000] [GPIO CFG] gpio_07=OUTPUT_0
+[    0.290000] [GPIO CFG] gpio_08=OUTPUT_0
+[    0.300000] [GPIO CFG] gpio_09=OUTPUT_0
+[    0.300000] [GPIO CFG] gpio_10=OUTPUT_0
+[    0.310000] [GPIO CFG] gpio_11=OUTPUT_0
+[    0.310000] [GPIO CFG] gpio_12=OUTPUT_0
+[    0.310000] [GPIO CFG] gpio_13=OUTPUT_0
+[    0.320000] [GPIO CFG] gpio_14=SDIO0_DATA_2
+[    0.320000] [GPIO CFG] gpio_15=SDIO0_DATA_3
+[    0.330000] [GPIO CFG] gpio_17=SDIO0_CMD
+[    0.330000] [GPIO CFG] gpio_18=OUTPUT_0
+[    0.340000] [GPIO CFG] gpio_19=OUTPUT_0
+[    0.340000] [GPIO CFG] gpio_20=SDIO0_CLK
+[    0.340000] [GPIO CFG] gpio_21=SDIO0_DATA_0
+[    0.350000] [GPIO CFG] gpio_22=SDIO0_CD_N
+[    0.350000] [GPIO CFG] gpio_23=SDIO0_DATA_1
+[    0.360000] [GPIO CFG] gpio_25=UART0_RX
+[    0.360000] [GPIO CFG] gpio_26=UART0_TX
+[    0.370000] [GPIO CFG] gpio_28=I2C0_DATA
+[    0.370000] [GPIO CFG] gpio_29=I2C0_CLK
+[    0.370000] [GPIO CFG] gpio_36=OUTPUT_0
+[    0.380000] [GPIO CFG] gpio_38=OUTPUT_0
+[    0.380000] [GPIO CFG] gpio_39=OUTPUT_0
+[    0.390000] [GPIO CFG] gpio_40=OUTPUT_1
+[    0.390000] [GPIO CFG] gpio_42=I2C1_DATA
+[    0.400000] [GPIO CFG] gpio_44=OUTPUT_1
+[    0.400000] [GPIO CFG] gpio_46=I2C1_CLK
+[    0.400000] [GPIO CFG] gpio_47=OUTPUT_1
+[    0.410000] [GPIO CFG] gpio_48=AO0_MCLK
+[    0.410000] [GPIO CFG] gpio_50=OUTPUT_1
+[    0.420000] [GPIO CFG] gpio_51=OUTPUT_1
+[    0.420000] [GPIO CFG] gpio_57=UART1_TX
+[    0.430000] [GPIO CFG] gpio_58=UART1_RX
+[    0.430000] create proc dir
+[    0.430000] gk register devices 10
+[    0.440000] gk register I2C
+[    0.450000] bio: create slab <bio-0> at 0
+[    0.460000] SCSI subsystem initialized
+[    0.460000] spi spi.0: gk SPI Controller 0 created 
+[    0.470000] spi spi.0: master is unqueued, this is deprecated
+[    0.480000] spi spi.1: gk SPI Controller 1 created 
+[    0.480000] spi spi.1: master is unqueued, this is deprecated
+[    0.490000] usbcore: registered new interface driver usbfs
+[    0.490000] usbcore: registered new interface driver hub
+[    0.500000] usbcore: registered new device driver usb
+[    0.510000] i2c regbase: 0xf3003000 
+[    0.510000] i2c i2c.0: i2c irq:registers 9
+[    0.520000] i2c i2c.0: GK I2C[0] adapter[i2c-0] probed!
+[    0.520000] i2c regbase: 0xf3004000 
+[    0.530000] i2c i2c.1: i2c irq:registers 58
+[    0.530000] i2c i2c.1: GK I2C[1] adapter[i2c-1] probed!
+[    0.540000] FS-Cache: Loaded
+[    0.540000] CacheFiles: Loaded
+[    0.550000] cfg80211: Calling CRDA to update world regulatory domain
+[    0.560000] gk-sd gk-sd.0: Slot0 req_size=0x00010000, segs=16, seg_size=0x00010000
+[    0.590000] gk-sd gk-sd.0: GK SD/MMC[0] has 1 slots @ 46000000Hz, [0x09e130b0:0x00000000]
+[    0.600000] NET: Registered protocol family 2
+[    0.600000] IP route cache hash table entries: 1024 (order: 0, 4096 bytes)
+[    0.610000] TCP established hash table entries: 2048 (order: 2, 16384 bytes)
+[    0.620000] TCP bind hash table entries: 2048 (order: 1, 8192 bytes)
+[    0.630000] TCP: Hash tables configured (established 2048 bind 2048)
+[    0.630000] TCP: reno registered
+[    0.640000] UDP hash table entries: 256 (order: 0, 4096 bytes)
+[    0.640000] UDP-Lite hash table entries: 256 (order: 0, 4096 bytes)
+[    0.650000] NET: Registered protocol family 1
+[    0.660000] RPC: Registered named UNIX socket transport module.
+[    0.660000] RPC: Registered udp transport module.
+[    0.670000] RPC: Registered tcp transport module.
+[    0.670000] RPC: Registered tcp NFSv4.1 backchannel transport module.
+[    0.690000] mdma init...
+[    0.690000] mdma request irq: 54 
+[    0.700000] squashfs: version 4.0 (2009/01/31) Phillip Lougher
+[    0.710000] exFAT: Version 1.2.9
+[    0.710000] NFS: Registering the id_resolver key type
+[    0.720000] NTFS driver 2.1.30 [Flags: R/W].
+[    0.720000] jffs2: version 2.2. (NAND) © 2001-2006 Red Hat, Inc.
+[    0.730000] msgmni has been set to 92
+[    0.740000] Block layer SCSI generic (bsg) driver version 0.4 loaded (major 253)
+[    0.750000] io scheduler noop registered
+[    0.750000] io scheduler deadline registered
+[    0.760000] io scheduler cfq registered (default)
+[    0.760000] Serial: gk_uart driver
+[    0.760000] serial_gk_probe: entry
+[    0.760000] uart.0: ttySGK0 at MMIO 0xa0005000 (irq = 31) is a gkuart
+[    0.770000] serial_gk_probe: succeed!
+[    0.770000] serial_gk_probe: entry
+[    0.770000] uart.1: ttySGK1 at MMIO 0xa001f000 (irq = 15) is a gkuart
+[    0.780000] serial_gk_probe: succeed!
+[    0.780000] serial_gk_probe: entry
+[    0.780000] uart.2: ttySGK2 at MMIO 0xa001e000 (irq = 27) is a gkuart
+[    0.790000] serial_gk_probe: succeed!
+[    0.800000] brd: module loaded
+[    0.800000] loop: module loaded
+[    0.810000] adc initialized (10:11)
+[    0.810000] pwm initialized (10:10)
+[    0.820000] speed_mod is 0
+[    0.820000] device_ID = 0x00207018
+[    0.820000] [XM25QH128A] USE 4X mode read and 4X mode write
+[    0.830000] gk_flash gk_flash.0: XM25QH128A (16384 Kbytes)
+[    0.840000] 7 cmdlinepart partitions found on MTD device gk_flash
+[    0.840000] Creating 7 MTD partitions on "gk_flash":
+[    0.850000] 0x000000000000-0x000000040000 : "uboot"
+[    0.860000] 0x000000040000-0x000000050000 : "env"
+[    0.860000] 0x000000050000-0x000000230000 : "kernel"
+[    0.870000] 0x000000230000-0x000000460000 : "rootfs"
+[    0.880000] 0x000000460000-0x000000f70000 : "usr"
+[    0.890000] 0x000000f70000-0x000000ff0000 : "mnt"
+[    0.890000] 0x000000ff0000-0x000001000000 : "cfg"
+[    0.900000] speed_mod is 0
+[    0.900000] detect sflash fail
+[    0.910000] slram: not enough parameters.
+[    0.910000] GKETH_init
+[    0.920000] [GKETH_drv_probe] eth_base = 0xf200e000
+[    0.920000] mii id = 0 
+[    0.920000] mdiobus_register: PHY[0] whose id 0x00000000
+[    0.930000] goke MII Bus: probed
+[    0.940000] gk-eth gk-eth.0: MAC Address[02:11:22:a3:a0:00].
+[    0.940000] usbcore: registered new interface driver cdc_wdm
+[    0.950000] musb-hdrc: version 6.0, ?dma?, otg (peripheral+host)
+[    0.960000] musb phy Begin initial sequence ...
+[    0.990000] val=0x20
+[    1.270000] gk musb init end...
+[    1.270000] dma_controller_create_non_init ok
+[    1.280000] musb-hdrc: ConfigData=0x03 (UTMI-16, SoftConn)
+[    1.280000] musb-hdrc: MHDRC RTL version 2.0 
+[    1.280000] musb-hdrc musb-hdrc: MUSB HDRC host driver
+[    1.290000] musb-hdrc musb-hdrc: new USB bus registered, assigned bus number 1
+[    1.300000] hub 1-0:1.0: USB hub found
+[    1.300000] hub 1-0:1.0: 1 port detected
+[    1.300000] musb-hdrc musb-hdrc: USB Host mode controller at f2006000 using DMA, IRQ 26
+[    1.310000] platform add gk musb...
+[    1.320000] mousedev: PS/2 mouse device common for all mice
+[    1.320000] input: GKInput as /devices/virtual/input/input0
+[    1.330000] evbug: Connected device: input0 (GKInput at gk/input0)
+[    1.330000] Protocol NEC[0]
+[    1.330000] ir request irq: 62 
+[    1.340000] IR Host Controller probed!
+[    1.340000] gk rtc init...
+[    1.340000] rtc base: 0xf2080000 
+[    1.350000] os read tm: t=0 
+[    1.350000] gk-rtc: dev (254:0)
+[    1.350000] gk-rtc gk-rtc: rtc core: registered gk-rtc as rtc0
+[    1.360000] i2c /dev entries driver
+[    1.360000] IPv4 over IPv4 tunneling driver
+[    1.370000] gre: GRE over IPv4 demultiplexor driver
+[    1.370000] ip_gre: GRE over IPv4 tunneling driver
+[    1.380000] TCP: cubic registered
+[    1.390000] Initializing XFRM netlink socket
+[    1.390000] NET: Registered protocol family 10
+[    1.400000] IPv6 over IPv4 tunneling driver
+[    1.410000] NET: Registered protocol family 17
+[    1.410000] NET: Registered protocol family 15
+[    1.420000] lib80211: common routines for IEEE802.11 drivers
+[    1.420000] lib80211_crypt: registered algorithm 'NULL'
+[    1.420000] lib80211_crypt: registered algorithm 'WEP'
+[    1.420000] lib80211_crypt: registered algorithm 'CCMP'
+[    1.420000] lib80211_crypt: registered algorithm 'TKIP'
+[    1.420000] Registering the dns_resolver key type
+[    1.430000] VFP support v0.3: implementor 41 architecture 1 part 20 variant b rev 5
+[    1.440000] os read tm: t=0 
+[    1.440000] gk-rtc gk-rtc: setting system clock to 1970-01-01 00:00:00 UTC (0)
+[    1.460000] VFS: Mounted root (squashfs filesystem) readonly on device 31:3.
+[    1.460000] Freeing init memory: 144K
+[    3.440000] net eth0: ###### GKETH_start_hw
+[    3.440000] net eth0: ###### GKETH_phy_start_aneg...
+[    3.450000] ADDRCONF(NETDEV_UP): eth0: link is not ready
+[    3.600000] hal: module license 'Proprietary' taints kernel.
+[    3.610000] Disabling lock debugging due to kernel taint
+[    3.660000] gk_crypto initialized (10:11)
+Media driver version (gcc version 4.6.1 (crosstool-NG 1.18.0) (uClibc)) tag #svn r13210 Sun Feb 11 09:51:44 CST 2018
+[    3.950000]  request_irq...24 ok-- video_sync
+[    3.950000]  request_irq...59 ok-- video_frame_last_pixel
+[    4.000000]  request_irq...61 ok-- video_frame
+[    4.000000] Init software HR timer for DSP communication
+[    4.160000] vi probe vi0
+[    4.220000] i2s: audio clock = 24000000.
+[    4.220000] i2s: init successful.
+[    4.470000] rtc8563: dev (254:1)
+[    4.470000] rtc8563 1-0051: rtc core: registered rtc8563 as rtc1
+[    4.480000] goke_wdt: GK Watchdog Timer, (c) 2014 Goke Microelectronics
+[    4.520000] [gk_wdt_init]: init
+[    4.520000] [gk_wdt_probe]: probe
+[    4.590000] [gk_wdt_probe]: probe mapped wdt_base=f3006000
+[    4.630000] watchdog inactive, reset disabled, irq disabled
+[    4.710000] write default i2c reg
+[    5.260000] usb 1-1: new high-speed USB device number 2 using musb-hdrc
+[    5.360000] set wifi pin
+[    8.030000] net eth0: ###### GKETH_phy_stop
+[    8.090000] net eth0: ###### GKETH_start_hw
+[    8.090000] net eth0: ###### GKETH_phy_start_aneg...
+[    8.110000] ADDRCONF(NETDEV_UP): eth0: link is not ready
+[    9.170000] i2c i2c.0: i2c[60]:gk_i2c_irq in wrong state[0x9]
+[    9.170000] i2c i2c.0: I2C state 0x10, please check address 0x60!
+[    9.170000] i2c i2c.0: I2C state 0x9, please check address 0x60!
+[    9.170000] i2c i2c.0: i2c[60]:gk_i2c_irq in wrong state[0x9]
+[    9.170000] i2c i2c.0: I2C state 0x9, please check address 0x60!
+[    9.170000] i2c i2c.0: i2c[60]:gk_i2c_irq in wrong state[0x9]
+[    9.170000] i2c i2c.0: i2c[60]:gk_i2c_irq in wrong state[0x9]
+[    9.170000] i2c i2c.0: I2C state 0x10, please check address 0x60!
+[    9.170000] i2c i2c.0: I2C state 0x9, please check address 0x60!
+[    9.170000] i2c i2c.0: i2c[60]:gk_i2c_irq in wrong state[0x9]
+[    9.180000] i2c i2c.0: i2c[60]:gk_i2c_irq in wrong state[0x9]
+[    9.180000] i2c i2c.0: I2C state 0x10, please check address 0x60!
+[    9.530000] ===================================================
+[    9.530000] =====nvp6134 drv create at 20171123 ver:20171128====
+[    9.530000] ===================================================
+[    9.530000] [sensor_get_dev_id 278]find sensor id: 00000000
+[    9.540000] sensor board reset...
+[   10.650000] Sofia uses obsolete (PF_INET,SOCK_PACKET)
+[   16.130000] sensor board reset...
+[   16.580000] win_height:0 win_width:0
+[   16.580000] win_height:0 win_width:0
+[   19.370000] RTL871X: module init start
+[   19.370000] RTL871X: rtl8188fu v4.3.23.6_20964.20170110
+[   19.370000] RTL871X: build time: Oct 23 2018 17:28:52
+[   19.370000] RTL871X: 
+[   19.370000] usb_endpoint_descriptor(0):
+[   19.370000] RTL871X: bLength=7
+[   19.370000] RTL871X: bDescriptorType=5
+[   19.370000] RTL871X: bEndpointAddress=81
+[   19.370000] RTL871X: wMaxPacketSize=512
+[   19.370000] RTL871X: bInterval=0
+[   19.370000] RTL871X: RT_usb_endpoint_is_bulk_in = 1
+[   19.370000] RTL871X: 
+[   19.370000] usb_endpoint_descriptor(1):
+[   19.370000] RTL871X: bLength=7
+[   19.370000] RTL871X: bDescriptorType=5
+[   19.370000] RTL871X: bEndpointAddress=2
+[   19.370000] RTL871X: wMaxPacketSize=512
+[   19.370000] RTL871X: bInterval=0
+[   19.370000] RTL871X: RT_usb_endpoint_is_bulk_out = 2
+[   19.370000] RTL871X: 
+[   19.370000] usb_endpoint_descriptor(2):
+[   19.370000] RTL871X: bLength=7
+[   19.370000] RTL871X: bDescriptorType=5
+[   19.370000] RTL871X: bEndpointAddress=3
+[   19.370000] RTL871X: wMaxPacketSize=512
+[   19.370000] RTL871X: bInterval=0
+[   19.370000] RTL871X: RT_usb_endpoint_is_bulk_out = 3
+[   19.370000] RTL871X: nr_endpoint=3, in_num=1, out_num=2
+[   19.370000] 
+[   19.370000] RTL871X: USB_SPEED_HIGH
+[   19.370000] RTL871X: CHIP TYPE: RTL8188FU
+[   19.400000] RTL871X: rtw_hal_config_rftype RF_Type is 3 TotalTxPath is 1 
+[   19.400000] RTL871X: Chip Version Info: CHIP_8188F_Normal_Chip_SMIC_B_CUT_1T1R_RomVer(0)
+[   19.400000] RTL871X: _ConfigChipOutEP_8188F OutEpQueueSel(0x05), OutEpNumber(2)
+[   19.400000] RTL871X: EEPROM type is E-FUSE
+[   19.400000] RTL871X: Boot from EFUSE, Autoload OK !
+[   19.400000] RTL871X: hal_EfuseSwitchToBank: Efuse switch bank to 0
+[   19.530000] RTL871X: hal_ReadEFuse_WiFi: data end at address=0x6e
+[   19.530000] RTL871X: Efuse Realmap:
+[   19.530000] 29 81 00 FC 0B 00 00 00 00 0C 04 4C 10 07 00 00
+[   19.530000] 33 33 31 32 33 33 33 33 31 32 33 1F FF FF FF FF
+[   19.530000] FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+[   19.530000] FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+[   19.530000] FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+[   19.530000] FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+[   19.530000] FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+[   19.530000] FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+[   19.530000] FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+[   19.530000] FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+[   19.530000] FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+[   19.530000] FF FF FF FF FF FF FF FF 23 1D 1A 00 00 00 00 FF
+[   19.530000] FF 02 00 10 00 FF 00 FF 00 00 FF FF FF FF FF FF
+[   19.540000] DA 0B 79 F1 47 66 40 20 32 33 C0 FF EE 09 03 52
+[   19.540000] 65 61 6C 74 65 6B 09 03 38 30 32 2E 31 31 6E 00
+[   19.540000] FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+[   19.540000] FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+[   19.540000] FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+[   19.540000] FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+[   19.540000] C1 B6 FF FF FF FF FF FF FF FF 00 11 FF FF FF FF
+[   19.540000] FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+[   19.540000] FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+[   19.540000] FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+[   19.550000] FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+[   19.550000] FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+[   19.550000] FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+[   19.550000] FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+[   19.550000] FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+[   19.550000] FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+[   19.550000] FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+[   19.550000] FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+[   19.550000] FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+[   19.550000] RTL871X: EEPROM VID = 0x bda
+[   19.550000] RTL871X: EEPROM PID = 0xf179
+[   19.550000] RTL871X: hal_com_config_channel_plan chplan:0x23
+[   19.550000] RTL871X: Hal_EfuseParsePowerSavingMode_8188F...bHWPwrPindetect(0)-bHWPowerdown(0) ,bSupportRemoteWakeup(1)
+[   19.550000] RTL871X: ### PS params=>  power_mgnt(2),usbss_enable(0) ###
+[   19.550000] RTL871X: kfree Pwr Trim flag:1
+[   19.550000] RTL871X: bb_gain:2
+[   19.570000] RTL871X: rtl8188f_FirmwareDownload fw: FW_NIC, size: 21020
+[   19.570000] RTL871X: rtl8188f_FirmwareDownload: fw_ver=4 fw_subver=0000 sig=0x88f1, Month=08, Date=22, Hour=17, Minute=36
+[   19.570000] RTL871X: rtl8188f_FirmwareDownload(): Shift for fw header!
+[   19.570000] RTL871X: rtl8188f_FirmwareDownload by IO write!
+[   19.610000] RTL871X: polling_fwdl_chksum: Checksum report OK! (1, 0ms), REG_MCUFWDL:0x00050105
+[   19.610000] RTL871X: _8051Reset8188: Finish
+[   19.620000] RTL871X: _FWFreeToGo: Polling FW ready OK! (104, 10ms), REG_MCUFWDL:0x000501c6
+[   19.620000] RTL871X: rtl8188f_FirmwareDownload: DLFW OK !
+[   19.620000] RTL871X: rtl8188f_FirmwareDownload success. write_fw:1, 50ms
+[   19.620000] RTL871X:  <=== rtl8188f_FirmwareDownload()
+[   19.640000] RTL871X: CardDisableRTL8188FU
+[   19.640000] RTL871X: hal_read_mac_hidden_rpt OK! (2, 20ms), fwdl:1, id:0x19
+[   19.640000] RTL871X: InitAdapterVariablesByPROM_8188FU(): REPLACEMENT = 0
+[   19.640000] RTL871X: rtw_hal_read_chip_info in 240 ms
+[   19.640000] RTL871X: init_channel_set((null)) ChannelPlan ID:0x23, ch num:14
+[   19.640000] RTL871X: NR_RECVBUFF: 8
+[   19.640000] RTL871X: MAX_RECVBUF_SZ: 16384
+[   19.640000] RTL871X: NR_PREALLOC_RECV_SKB: 8
+[   19.640000] RTL871X: rtw_alloc_macid((null)) if1, hwaddr:ff:ff:ff:ff:ff:ff macid:1
+[   19.650000] RTL871X: Init_ODM_ComInfo_8188f(): fab_ver=0 cut_ver=1
+[   19.660000] RTL871X: phy_ConfigBBWithPgParaFile(): No File PHY_REG_PG.txt, Load from HWImg Array!
+[   19.660000] RTL871X: default power by rate loaded
+[   19.660000] RTL871X: rtw_macaddr_cfg mac addr:20:32:33:C0:FF:EE
+[   19.660000] RTL871X: bDriverStopped:True, bSurpriseRemoved:False, bup:0, hw_init_completed:0
+[   19.660000] RTL871X: rtw_wiphy_alloc(phy0)
+[   19.660000] RTL871X: rtw_wdev_alloc(padapter=83a63000)
+[   19.660000] RTL871X: rtw_wiphy_register(phy0)
+[   19.660000] RTL871X: rtw_ndev_init(wlan0) if1 mac_addr=20:32:33:C0:FF:EE
+[   19.770000] usbcore: registered new interface driver rtl8188fu
+[   19.770000] RTL871X: module init ret=0
+[   20.810000] net eth0: ###### GKETH_phy_stop
+[   21.350000] RTL871X: +871x_drv - drv_open, bup=0
+[   21.350000] RTL871X:  power-on :REG_SYS_CLKR 0x09=0xfc. REG_CR 0x100=0x3f.
+[   21.350000] RTL871X:  MAC has already power on.
+[   21.350000] RTL871X: rtl8188f_FirmwareDownload fw: FW_NIC, size: 21020
+[   21.350000] RTL871X: rtl8188f_FirmwareDownload: fw_ver=4 fw_subver=0000 sig=0x88f1, Month=08, Date=22, Hour=17, Minute=36
+[   21.350000] RTL871X: rtl8188f_FirmwareDownload(): Shift for fw header!
+[   21.350000] RTL871X: rtl8188f_FirmwareDownload by IO write!
+[   21.390000] RTL871X: polling_fwdl_chksum: Checksum report OK! (1, 0ms), REG_MCUFWDL:0x00050105
+[   21.390000] RTL871X: _8051Reset8188: Finish
+[   21.400000] RTL871X: _FWFreeToGo: Polling FW ready OK! (94, 10ms), REG_MCUFWDL:0x000501c6
+[   21.400000] RTL871X: rtl8188f_FirmwareDownload: DLFW OK !
+[   21.400000] RTL871X: rtl8188f_FirmwareDownload success. write_fw:1, 50ms
+[   21.410000] RTL871X:  <=== rtl8188f_FirmwareDownload()
+[   21.410000] RTL871X: fw download ok!
+[   21.420000] RTL871X: PHY_MACConfig8188F OK!
+[   21.460000] RTL871X: PHY_BBConfig8188F OK!
+[   21.720000] RTL871X: PHY_RFConfig8188F OK!
+[   21.720000] RTL871X: usb_AggSettingRxUpdate: RX Aggregation USB mode, size=20KB, timeout=1024us
+[   21.740000] RTL871X: pDM_Odm TxPowerTrackControl = 1
+[   21.740000] RTL871X: pDM_Odm TxPowerTrackControl = 1
+[   22.040000] RTL871X: rtl8188fu_hal_init in 690ms
+[   22.050000] RTL871X: #### hw_var_set_opmode() -5079 iface_type(0) mode = 2 ####
+[   22.050000] RTL871X: rtw_rf_get_kfree_tx_gain_offset path:0, ch:6, bb_gain_sel:0, kfree_offset:2
+[   22.050000] RTL871X: kfree gain_offset 0x55:0x82060 RTL871X:  after :0x8a060
+[   22.050000] RTL871X: MAC Address = 20:32:33:C0:FF:EE
+[   22.050000] RTL871X: rtw_cfg80211_init_wiphy:rf_type=3
+[   22.050000] RTL871X: [HT] HAL Support STBC = 0x01
+[   22.050000] RTL871X: -871x_drv - drv_open, bup=1
+[   22.050000] RTL871X: cfg80211_rtw_set_power_mgmt(wlan0) enabled:1, timeout:-1
+[   22.050000] ADDRCONF(NETDEV_UP): wlan0: link is not ready
+[   24.050000] RTL871X: HwRateToMRate(): Non supported Rate [ff]!!!
+[   24.560000] RTL871X: ==>rtw_ps_processor .fw_state(8)
+[   24.560000] RTL871X: ==>ips_enter cnts:1
+[   24.560000] RTL871X: nolinked power save enter
+[   24.560000] RTL871X: ===> rtw_ips_pwr_down...................
+[   24.560000] RTL871X: ====> rtw_ips_dev_unload...
+[   24.580000] RTL871X: usb_read_port_cancel
+[   24.580000] dma abort ch=2,is_tx=0 dmasta=0x0 dmactr=0x38000000
+[   24.580000] RTL871X: usb_read_port_complete() RX Warning! bDriverStopped(False) OR bSurpriseRemoved(False)
+[   24.580000] dma abort ch=2,is_tx=0 dmasta=0x0 dmactr=0x38000000
+[   24.580000] RTL871X: usb_read_port_complete() RX Warning! bDriverStopped(False) OR bSurpriseRemoved(False)
+[   24.580000] dma abort ch=2,is_tx=0 dmasta=0x0 dmactr=0x38000000
+[   24.580000] RTL871X: usb_read_port_complete() RX Warning! bDriverStopped(False) OR bSurpriseRemoved(False)
+[   24.580000] dma abort ch=2,is_tx=0 dmasta=0x0 dmactr=0x38000000
+[   24.580000] RTL871X: usb_read_port_complete() RX Warning! bDriverStopped(False) OR bSurpriseRemoved(False)
+[   24.580000] dma abort ch=2,is_tx=0 dmasta=0x0 dmactr=0x38000000
+[   24.580000] RTL871X: usb_read_port_complete() RX Warning! bDriverStopped(False) OR bSurpriseRemoved(False)
+[   24.580000] dma abort ch=2,is_tx=0 dmasta=0x0 dmactr=0x38000000
+[   24.580000] RTL871X: usb_read_port_complete() RX Warning! bDriverStopped(False) OR bSurpriseRemoved(False)
+[   24.580000] dma abort ch=2,is_tx=0 dmasta=0x0 dmactr=0x38000000
+[   24.580000] RTL871X: usb_read_port_complete() RX Warning! bDriverStopped(False) OR bSurpriseRemoved(False)
+[   24.580000] dma abort ch=2,is_tx=0 dmasta=0x0 dmactr=0x38000000
+[   24.580000] RTL871X: usb_read_port_complete() RX Warning! bDriverStopped(False) OR bSurpriseRemoved(False)
+[   24.580000] RTL871X: usb_write_port_cancel 
+[   24.580000] RTL871X: ==> rtl8188fu_hal_deinit
+[   24.580000] RTL871X: CardDisableRTL8188FU
+[   24.620000] RTL871X: <=== rtw_ips_pwr_down..................... in 60ms
+[   24.890000] RTL871X: cfg80211_rtw_flush_pmksa(wlan0)
+[   25.810000] RTL871X: cfg80211_rtw_scan(wlan0)
+[   25.810000] RTL871X: _rtw_pwr_wakeup call ips_leave....
+[   25.810000] RTL871X: ==>ips_leave cnts:1
+[   25.810000] RTL871X: ===>  rtw_ips_pwr_up..............
+[   25.810000] RTL871X: ===> ips_netdrv_open.........
+[   25.810000] RTL871X:  power-on :REG_SYS_CLKR 0x09=0xfc. REG_CR 0x100=0x3f.
+[   25.810000] RTL871X:  MAC has already power on.
+[   25.820000] RTL871X: rtl8188f_FirmwareDownload fw: FW_NIC, size: 21020
+[   25.820000] RTL871X: rtl8188f_FirmwareDownload: fw_ver=4 fw_subver=0000 sig=0x88f1, Month=08, Date=22, Hour=17, Minute=36
+[   25.820000] RTL871X: rtl8188f_FirmwareDownload(): Shift for fw header!
+[   25.820000] RTL871X: rtl8188f_FirmwareDownload by IO write!
+[   25.870000] RTL871X: polling_fwdl_chksum: Checksum report OK! (1, 0ms), REG_MCUFWDL:0x00050505
+[   25.870000] RTL871X: _8051Reset8188: Finish
+[   25.890000] RTL871X: _FWFreeToGo: Polling FW ready OK! (121, 20ms), REG_MCUFWDL:0x000505c6
+[   25.890000] RTL871X: rtl8188f_FirmwareDownload: DLFW OK !
+[   25.890000] RTL871X: rtl8188f_FirmwareDownload success. write_fw:1, 70ms
+[   25.890000] RTL871X:  <=== rtl8188f_FirmwareDownload()
+[   25.890000] RTL871X: fw download ok!
+[   25.900000] RTL871X: PHY_MACConfig8188F OK!
+[   25.930000] RTL871X: PHY_BBConfig8188F OK!
+[   26.190000] RTL871X: PHY_RFConfig8188F OK!
+[   26.190000] RTL871X: usb_AggSettingRxUpdate: RX Aggregation USB mode, size=20KB, timeout=1024us
+[   26.200000] RTL871X: pDM_Odm TxPowerTrackControl = 1
+[   26.200000] RTL871X: pDM_Odm TxPowerTrackControl = 1
+[   26.500000] RTL871X: rtl8188fu_hal_init in 690ms
+[   26.510000] RTL871X: #### hw_var_set_opmode() -5079 iface_type(0) mode = 2 ####
+[   26.510000] RTL871X: rtw_rf_get_kfree_tx_gain_offset path:0, ch:6, bb_gain_sel:0, kfree_offset:2
+[   26.510000] RTL871X: kfree gain_offset 0x55:0x82060 RTL871X:  after :0x8a060
+[   26.520000] RTL871X: <===  rtw_ips_pwr_up.............. in 710ms
+[   26.520000] RTL871X: nolinked power save leave
+[   26.520000] RTL871X: ==> ips_leave.....LED(0x01028282)...
+[   28.230000] RTL871X: survey done event(4b) band:0 for wlan0
+[   28.230000] RTL871X: rtw_indicate_scan_done(wlan0)
+[   28.250000] RTL871X: ==>rtw_ps_processor .fw_state(8)
+[   28.250000] RTL871X: ==>ips_enter cnts:2
+[   28.250000] RTL871X: nolinked power save enter
+[   28.250000] RTL871X: ===> rtw_ips_pwr_down...................
+[   28.250000] RTL871X: ====> rtw_ips_dev_unload...
+[   28.250000] RTL871X: usb_read_port_cancel
+[   28.250000] RTL871X: usb_read_port_complete() RX Warning! bDriverStopped(False) OR bSurpriseRemoved(False)
+[   28.250000] RTL871X: usb_read_port_complete() RX Warning! bDriverStopped(False) OR bSurpriseRemoved(False)
+[   28.250000] RTL871X: usb_read_port_complete() RX Warning! bDriverStopped(False) OR bSurpriseRemoved(False)
+[   28.250000] dma abort ch=2,is_tx=0 dmasta=0x0 dmactr=0x2a00012f
+[   28.250000] RTL871X: usb_read_port_complete() RX Warning! bDriverStopped(False) OR bSurpriseRemoved(False)
+[   28.250000] dma abort ch=2,is_tx=0 dmasta=0x0 dmactr=0x2a00012f
+[   28.250000] RTL871X: usb_read_port_complete() RX Warning! bDriverStopped(False) OR bSurpriseRemoved(False)
+[   28.250000] dma abort ch=2,is_tx=0 dmasta=0x0 dmactr=0x2a00012f
+[   28.250000] RTL871X: usb_read_port_complete() RX Warning! bDriverStopped(False) OR bSurpriseRemoved(False)
+[   28.250000] dma abort ch=2,is_tx=0 dmasta=0x0 dmactr=0x2a00012f
+[   28.250000] RTL871X: usb_read_port_complete() RX Warning! bDriverStopped(False) OR bSurpriseRemoved(False)
+[   28.250000] dma abort ch=2,is_tx=0 dmasta=0x0 dmactr=0x2a00012f
+[   28.250000] RTL871X: usb_read_port_complete() RX Warning! bDriverStopped(False) OR bSurpriseRemoved(False)
+[   28.250000] RTL871X: usb_write_port_cancel 
+[   28.250000] RTL871X: ==> rtl8188fu_hal_deinit
+[   28.250000] RTL871X: CardDisableRTL8188FU
+[   28.280000] RTL871X: <=== rtw_ips_pwr_down..................... in 30ms
+[   28.310000] RTL871X: =>cfg80211_rtw_connect(wlan0) - Start to Connection
+[   28.310000] RTL871X: privacy=1, key=  (null), key_len=0, key_idx=0, auth_type=0
+[   28.310000] RTL871X: _rtw_pwr_wakeup call ips_leave....
+[   28.310000] RTL871X: ==>ips_leave cnts:2
+[   28.310000] RTL871X: ===>  rtw_ips_pwr_up..............
+[   28.310000] RTL871X: ===> ips_netdrv_open.........
+[   28.320000] RTL871X:  power-on :REG_SYS_CLKR 0x09=0xfc. REG_CR 0x100=0x3f.
+[   28.320000] RTL871X:  MAC has already power on.
+[   28.320000] RTL871X: rtl8188f_FirmwareDownload fw: FW_NIC, size: 21020
+[   28.320000] RTL871X: rtl8188f_FirmwareDownload: fw_ver=4 fw_subver=0000 sig=0x88f1, Month=08, Date=22, Hour=17, Minute=36
+[   28.320000] RTL871X: rtl8188f_FirmwareDownload(): Shift for fw header!
+[   28.320000] RTL871X: rtl8188f_FirmwareDownload by IO write!
+[   28.360000] RTL871X: polling_fwdl_chksum: Checksum report OK! (1, 0ms), REG_MCUFWDL:0x00050505
+[   28.360000] RTL871X: _8051Reset8188: Finish
+[   28.380000] RTL871X: _FWFreeToGo: Polling FW ready OK! (71, 20ms), REG_MCUFWDL:0x000505c6
+[   28.380000] RTL871X: rtl8188f_FirmwareDownload: DLFW OK !
+[   28.380000] RTL871X: rtl8188f_FirmwareDownload success. write_fw:1, 60ms
+[   28.380000] RTL871X:  <=== rtl8188f_FirmwareDownload()
+[   28.380000] RTL871X: fw download ok!
+[   28.390000] RTL871X: PHY_MACConfig8188F OK!
+[   28.430000] RTL871X: PHY_BBConfig8188F OK!
+[   28.690000] RTL871X: PHY_RFConfig8188F OK!
+[   28.690000] RTL871X: usb_AggSettingRxUpdate: RX Aggregation USB mode, size=20KB, timeout=1024us
+[   28.710000] RTL871X: pDM_Odm TxPowerTrackControl = 1
+[   28.710000] RTL871X: pDM_Odm TxPowerTrackControl = 1
+[   29.020000] RTL871X: rtl8188fu_hal_init in 710ms
+[   29.030000] RTL871X: #### hw_var_set_opmode() -5079 iface_type(0) mode = 2 ####
+[   29.030000] RTL871X: rtw_rf_get_kfree_tx_gain_offset path:0, ch:6, bb_gain_sel:0, kfree_offset:2
+[   29.030000] RTL871X: kfree gain_offset 0x55:0x82060 RTL871X:  after :0x8a060
+[   29.040000] RTL871X: <===  rtw_ips_pwr_up.............. in 730ms
+[   29.040000] RTL871X: nolinked power save leave
+[   29.040000] RTL871X: ==> ips_leave.....LED(0x01028282)...
+[   29.040000] RTL871X: ssid=MY_SSID_WIFI, len=13
+[   29.040000] RTL871X: bssid=00:11:22:33:44:55
+[   29.040000] RTL871X: rtw_cfg80211_set_wpa_version, wpa_version=2
+[   29.040000] RTL871X: rtw_cfg80211_set_auth_type, nl80211_auth_type=0
+[   29.040000] RTL871X: cfg80211_rtw_connect, ie_len=22
+[   29.040000] RTL871X: set wpa_ie(length:22):
+[   29.040000] RTL871X: 0x30 0x14 0x01 0x00 0x00 0x0f 0xac 0x04 
+[   29.040000] RTL871X: 0x01 0x00 0x00 0x0f 0xac 0x04 0x01 0x00 
+[   29.040000] RTL871X: 0x00 0x0f 0xac 0x02 0x00 0x00 0x5c 0xe3 
+[   29.040000] RTL871X: got wpa2_ie, wpa2_ielen:20
+[   29.040000] RTL871X: SetHwReg8188F, 6249, RCR= 700060ca
+[   29.040000] RTL871X: rtw_cfg80211_set_cipher, ucast=1, cipher=0xfac04
+[   29.040000] RTL871X: rtw_cfg80211_set_cipher, ucast=0, cipher=0xfac04
+[   29.040000] RTL871X: rtw_cfg80211_set_key_mgt, key_mgt=0xfac02
+[   29.040000] RTL871X: rtw_set_802_11_connect(wlan0)  fw_state=0x00000008
+[   29.040000] RTL871X: [by_bssid:1][assoc_ssid:MY_SSID_WIFI][to_roam:0] new candidate: MY_SSID_WIFI(00:11:22:33:44:55, ch8) rssi:-78
+[   29.040000] RTL871X: rtw_select_and_join_from_scanned_queue: candidate: MY_SSID_WIFI(00:11:22:33:44:55, ch:8)
+[   29.040000] RTL871X: link to Broadcom AP
+[   29.040000] RTL871X: [HT] HAL Support STBC = 0x01
+[   29.040000] RTL871X: [HT] Declare supporting RX STBC = 1
+[   29.040000] RTL871X: rtw_restructure_ht_ie IEEE80211_HT_CAP_MAX_AMSDU is set
+[   29.040000] RTL871X: rtw_chk_start_clnt_join(wlan0) req: 8,0,0
+[   29.040000] RTL871X: rtw_chk_start_clnt_join(wlan0) union: 8,0,0
+[   29.040000] RTL871X: set ssid:dot11AuthAlgrthm=2, dot11PrivacyAlgrthm=4, dot118021XGrpPrivacy=4
+[   29.060000] RTL871X: <=cfg80211_rtw_connect, ret 0
+[   29.210000] RTL871X: OnBeacon: beacon keys ready
+[   29.210000] RTL871X: link to Broadcom AP
+[   29.210000] RTL871X: start auth
+[   29.210000] RTL871X: issue_auth
+[   29.210000] RTL871X: OnAuthClient
+[   29.210000] RTL871X: auth success, start assoc
+[   29.210000] RTL871X: network.SupportedRates[0]=82
+[   29.210000] RTL871X: network.SupportedRates[1]=84
+[   29.210000] RTL871X: network.SupportedRates[2]=8B
+[   29.210000] RTL871X: network.SupportedRates[3]=96
+[   29.210000] RTL871X: network.SupportedRates[4]=24
+[   29.210000] RTL871X: network.SupportedRates[5]=30
+[   29.210000] RTL871X: network.SupportedRates[6]=48
+[   29.210000] RTL871X: network.SupportedRates[7]=6C
+[   29.210000] RTL871X: network.SupportedRates[8]=0C
+[   29.210000] RTL871X: network.SupportedRates[9]=12
+[   29.210000] RTL871X: network.SupportedRates[10]=18
+[   29.210000] RTL871X: network.SupportedRates[11]=60
+[   29.210000] RTL871X: bssrate_len = 12
+[   29.210000] RTL871X: OnAssocRsp
+[   29.220000] RTL871X: report_join_res(3)
+[   29.220000] RTL871X: rtw_joinbss_update_network
+[   29.220000] RTL871X: +rtw_update_ht_cap()
+[   29.220000] RTL871X: rtw_alloc_macid(wlan0) if1, hwaddr:00:11:22:33:44:55 macid:0
+[   29.220000] RTL871X: rtw_joinbss_update_stainfo
+[   29.220000] RTL871X: supp_mcs_set = ff, 00, 00, rf_type=3, tx_ra_bitmap=00000000000fffff
+[   29.220000] RTL871X: rtw_get_tx_nss: 1 SS, rf_type=3
+[   29.220000] RTL871X: ### Set STA_(0) info ###
+[   29.220000] RTL871X: rtw_cfg80211_indicate_connect(wlan0)
+[   29.220000] RTL871X: pwdev->sme_state(b)=1
+[   29.220000] RTL871X: pwdev->sme_state(a)=1
+[   29.220000] RTL871X: assoc success
+[   29.220000] ADDRCONF(NETDEV_CHANGE): wlan0: link becomes ready
+[   29.220000] RTL871X: HW_VAR_BASIC_RATE: 0x15f -> 0x15f -> 0x15f
+[   29.220000] RTL871X: OnAction_back
+[   29.220000] RTL871X: OnAction_back, action=0
+[   29.220000] RTL871X: recv eapol packet
+[   29.230000] RTL871X: WMM(0): 0, a42b
+[   29.230000] RTL871X: WMM(1): 0, a44f
+[   29.230000] RTL871X: WMM(2): 0, 5e4322
+[   29.230000] RTL871X: WMM(3): 0, 2f3222
+[   29.230000] RTL871X: wmm_para_seq(0): 0
+[   29.230000] RTL871X: wmm_para_seq(1): 1
+[   29.230000] RTL871X: wmm_para_seq(2): 2
+[   29.230000] RTL871X: wmm_para_seq(3): 3
+[   29.230000] RTL871X: HTOnAssocRsp
+[   29.230000] RTL871X: ODM_Get_Rate_Bitmap ==> rssi_level:0x00, WirelessMode:0x0b, rate_bitmap:0x000ff005
+[   29.230000] RTL871X: UpdateHalRAMask8188F => mac_id:0, networkType:0x0b, mask:0x000fffff
+[   29.230000]   ==> rssi_level:0, rate_bitmap:0x000ff005
+[   29.230000] RTL871X: rtl8188f_set_FwMacIdConfig_cmd(): mac_id=0 raid=0x3 bw=0 mask=0xff005
+[   29.230000] RTL871X: UpdateHalRAMask8188F(): mac_id=0 raid=0x3 bw=0 mask=0xff005 init_rate=0x13
+[   29.230000] RTL871X: SetHwReg8188F(wlan0): [HW_VAR_MACID_WAKEUP] macid=0, org reg_0x4d4=0x00000000
+[   29.230000] RTL871X: +rtl8188f_download_rsvd_page(wlan0): iface_type=0 mstatus(1)
+[   29.230000] RTL871X: rtw_hal_set_fw_rsvd_page PageSize: 128, RsvdPageNUm: 8
+[   29.230000] RTL871X: LocPsPoll: 2
+[   29.230000] RTL871X: LocNullData: 3
+[   29.230000] RTL871X: LocQosNull: 4
+[   29.230000] RTL871X: rtw_hal_set_fw_rsvd_page PageNum(5), pktlen(586)
+[   29.230000] RTL871X: rtw_hal_set_fw_rsvd_page: Set RSVD page location to Fw ,TotalPacketLen(586), TotalPageNum(5)
+[   29.230000] RTL871X: RsvdPageLoc: ProbeRsp=0 PsPoll=2 Null=3 QoSNull=4 BTNull=0
+[   29.230000] RTL871X: wlan0: 1 DL RSVD page success! DLBcnCount:1, poll:1
+[   29.240000] RTL871X: send eapol packet
+[   29.240000] RTL871X: rtl8188f_fill_default_txdesc(wlan0): SP Packet(0x888E) rate=0x0
+[   29.270000] RTL871X: =>mlmeext_joinbss_event_callback - End to Connection without 4-way
+[   29.270000] RTL871X: phydm_rssi_report mac_id:0, mac:00:11:22:33:44:55, rssi:24
+[   29.270000] RTL871X: phydm_rssi_report RAINFO - TP:UL, TxBF:DIS, STBC:DIS, Noisy:False, Firstcont:True
+[   29.280000] RTL871X: rtl8188f_c2h_packet_handler: C2H, ID=3 seq=0 len=8
+[   29.280000] RTL871X: issue_addba_rsp_wait_ack(wlan0) ra=00:11:22:33:44:55 tid=0, acked, 1/3 in 10 ms
+[   29.280000] RTL871X: recv eapol packet
+[   29.310000] RTL871X: send eapol packet
+[   29.310000] RTL871X: rtl8188f_fill_default_txdesc(wlan0): SP Packet(0x888E) rate=0x0
+[   29.310000] RTL871X: cfg80211_rtw_add_key(wlan0) adding key for 00:11:22:33:44:55
+[   29.310000] RTL871X: cipher=0xfac04
+[   29.310000] RTL871X: key_len=0x10
+[   29.310000] RTL871X: seq_len=0x6
+[   29.310000] RTL871X: key_index=0
+[   29.310000] RTL871X: pairwise=1
+[   29.310000] RTL871X: rtw_cfg80211_set_encryption
+[   29.310000] RTL871X: rtw_cfg80211_set_encryption, : param->u.crypt.set_tx ==1 
+[   29.310000] RTL871X:  ~~~~set sta key:unicastkey
+[   29.310000] RTL871X: set pairwise key camid:4, addr:00:11:22:33:44:55, kid:0, type:AES
+[   29.310000] RTL871X: rtw_cfg80211_set_encryption, ret=0
+[   29.330000] RTL871X: cfg80211_rtw_set_default_key(wlan0) key_index=0, unicast=1, multicast=0
+[   29.330000] RTL871X: cfg80211_rtw_add_key(wlan0) adding key for   (null)
+[   29.330000] RTL871X: cipher=0xfac04
+[   29.330000] RTL871X: key_len=0x10
+[   29.330000] RTL871X: seq_len=0x6
+[   29.330000] RTL871X: key_index=1
+[   29.330000] RTL871X: pairwise=0
+[   29.330000] RTL871X: rtw_cfg80211_set_encryption
+[   29.330000] RTL871X:  ~~~~set sta key:groupkey
+[   29.330000] RTL871X: ==> rtw_set_key algorithm(4),keyid(1),key_mask(0)
+[   29.330000] RTL871X: rtw_cfg80211_set_encryption, ret=0
+[   29.350000] RTL871X: set group key camid:5, addr:00:11:22:33:44:55, kid:1, type:AES
+[   29.350000] RTL871X: SetHwReg8188F, 6242, RCR= 700060ce
+[   29.350000] RTL871X: cfg80211_rtw_change_station(wlan0)
+[   29.500000] RTL871X: rtl8188f_fill_default_txdesc(wlan0): SP Packet(0x0800) rate=0x0
+[   29.550000] RTL871X: rtl8188f_fill_default_txdesc(wlan0): SP Packet(0x0800) rate=0x0
+[   29.660000] RTL871X: rtl8188f_fill_default_txdesc(wlan0): SP Packet(0x0806) rate=0x0
+[   31.040000] RTL871X: ODM_Get_Rate_Bitmap ==> rssi_level:0x02, WirelessMode:0x0b, rate_bitmap:0x000ff000
+[   31.040000] RTL871X: UpdateHalRAMask8188F => mac_id:0, networkType:0x0b, mask:0x000fffff
+[   31.040000]   ==> rssi_level:2, rate_bitmap:0x000ff000
+[   31.040000] RTL871X: rtl8188f_set_FwMacIdConfig_cmd(): mac_id=0 raid=0x3 bw=0 mask=0xff000
+[   31.040000] RTL871X: UpdateHalRAMask8188F(): mac_id=0 raid=0x3 bw=0 mask=0xff000 init_rate=0x13
+[   31.040000] RTL871X: HwRateToMRate(): Non supported Rate [ff]!!!
+[   31.050000] RTL871X: rtl8188f_c2h_packet_handler: C2H, ID=12 seq=1 len=4
+[   31.970000] RTL871X: rtl8188f_c2h_packet_handler: C2H, ID=12 seq=2 len=4
+[   32.280000] RTL871X: rtl8188f_c2h_packet_handler: C2H, ID=12 seq=3 len=4
+[   32.380000] RTL871X: rtl8188f_c2h_packet_handler: C2H, ID=12 seq=4 len=4
+[   32.580000] RTL871X: rtl8188f_c2h_packet_handler: C2H, ID=12 seq=5 len=4
+[   32.680000] RTL871X: rtl8188f_c2h_packet_handler: C2H, ID=12 seq=6 len=4
+[   32.790000] RTL871X: rtl8188f_c2h_packet_handler: C2H, ID=12 seq=7 len=4
+[   32.890000] RTL871X: rtl8188f_c2h_packet_handler: C2H, ID=12 seq=8 len=4
+[   32.990000] RTL871X: rtl8188f_c2h_packet_handler: C2H, ID=12 seq=9 len=4
+[   33.040000] RTL871X: ODM_Get_Rate_Bitmap ==> rssi_level:0x03, WirelessMode:0x0b, rate_bitmap:0x000ff005
+[   33.040000] RTL871X: UpdateHalRAMask8188F => mac_id:0, networkType:0x0b, mask:0x000fffff
+[   33.040000]   ==> rssi_level:3, rate_bitmap:0x000ff005
+[   33.040000] RTL871X: rtl8188f_set_FwMacIdConfig_cmd(): mac_id=0 raid=0x3 bw=0 mask=0xff005
+[   33.040000] RTL871X: UpdateHalRAMask8188F(): mac_id=0 raid=0x3 bw=0 mask=0xff005 init_rate=0x13
+[   33.090000] RTL871X: rtl8188f_c2h_packet_handler: C2H, ID=12 seq=10 len=4
+[   33.630000] RTL871X: rtl8188f_fill_default_txdesc(wlan0): SP Packet(0x0806) rate=0x0
+[   33.810000] RTL871X: rtl8188f_c2h_packet_handler: C2H, ID=12 seq=11 len=4
+[   34.220000] RTL871X: rtl8188f_c2h_packet_handler: C2H, ID=12 seq=12 len=4
+[   34.320000] RTL871X: rtl8188f_c2h_packet_handler: C2H, ID=12 seq=13 len=4
+[   34.430000] RTL871X: rtl8188f_c2h_packet_handler: C2H, ID=12 seq=14 len=4
+[   34.530000] RTL871X: rtl8188f_c2h_packet_handler: C2H, ID=12 seq=15 len=4
+[   34.630000] RTL871X: rtl8188f_c2h_packet_handler: C2H, ID=12 seq=16 len=4
+[   34.730000] RTL871X: rtl8188f_c2h_packet_handler: C2H, ID=12 seq=17 len=4
+[   37.040000] RTL871X: rtl8188f_c2h_packet_handler: C2H, ID=3 seq=18 len=8
+[   37.040000] RTL871X: issue_del_ba_ex(wlan0) ra=00:11:22:33:44:55 reason=39, tid=0, initiator=0, acked, 1/3 in 0 ms
+[   37.310000] RTL871X: OnAction_back
+[   37.310000] RTL871X: OnAction_back, action=0
+[   37.310000] RTL871X: rtl8188f_c2h_packet_handler: C2H, ID=3 seq=19 len=8
+[   37.310000] RTL871X: issue_addba_rsp_wait_ack(wlan0) ra=00:11:22:33:44:55 tid=0, acked, 1/3 in 0 ms
+[   38.650000] RTL871X: rtl8188f_fill_default_txdesc(wlan0): SP Packet(0x0806) rate=0x0
+[   40.190000] wlan0: no IPv6 routers present
+[   41.040000] RTL871X: rtl8188f_c2h_packet_handler: C2H, ID=3 seq=20 len=8
+[   41.040000] RTL871X: issue_del_ba_ex(wlan0) ra=00:11:22:33:44:55 reason=39, tid=0, initiator=0, acked, 1/3 in 0 ms
+[   42.690000] RTL871X: OnAction_back
+[   42.690000] RTL871X: OnAction_back, action=0
+[   42.690000] RTL871X: rtl8188f_c2h_packet_handler: C2H, ID=3 seq=21 len=8
+[   42.690000] RTL871X: issue_addba_rsp_wait_ack(wlan0) ra=00:11:22:33:44:55 tid=0, acked, 1/3 in 0 ms
+[   42.920000] RTL871X: rtl8188f_c2h_packet_handler: C2H, ID=12 seq=22 len=4
+[   44.050000] RTL871X: rtl8188f_c2h_packet_handler: C2H, ID=12 seq=23 len=4
+[   44.150000] RTL871X: rtl8188f_c2h_packet_handler: C2H, ID=12 seq=24 len=4
+[   45.840000] RTL871X: rtl8188f_fill_default_txdesc(wlan0): SP Packet(0x0806) rate=0x0
+[   46.000000] RTL871X: rtl8188f_c2h_packet_handler: C2H, ID=12 seq=25 len=4
+[   46.100000] RTL871X: rtl8188f_c2h_packet_handler: C2H, ID=12 seq=26 len=4
+[   46.510000] RTL871X: rtl8188f_c2h_packet_handler: C2H, ID=12 seq=27 len=4

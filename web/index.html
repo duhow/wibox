@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=320, initial-scale=1, user-scalable=no">
+<meta name="theme-color" content="#7ce">
+<title>Fermax Wibox</title>
+<style>
+@media(prefers-color-scheme: dark){body{background:#111;}}
+*{border:0;padding:0;margin:0;list-style:none;font-weight:bold;font-family:'sans-serif',Arial;}
+h1{display:block;clear:both;background:#7ce;color:#fff;font-size:36px;padding:10px;}
+#view{text-align:center;max-width:500px;margin:0 auto;padding:10px;}
+#cam{background:#444;width:100%;min-width:320px;min-height:240px;margin:10px auto;display:block;}
+#cam.on{background:#00f;}
+#view input[type=checkbox]{display:none;}
+input:checked+label{background:#0f0;}
+label,button{background:#fa0;box-shadow:0 0 5px 0 rgba(0,0,0,0.5);min-width:48px;min-height:48px;border:1px solid black;display:inline-block;font-size:20px;}
+button{background:#888;padding:4px 8px;color:#fff;}
+button:not([disabled]){background:#02e;}
+table{width:100%;}
+td:first-child{text-align:left;}
+td:last-child{text-align:right;}
+</style>
+</head>
+<body>
+<h1>FERMAX</h1>
+<div id="view">
+<img id="cam" src="" alt="Camera">
+<table><tr>
+<td><input type="checkbox" id="dsp" onchange="d(this.checked)"><label for="dsp"></label></td>
+<td><button id="open" onclick="o()" disabled>Open</button></td>
+<td><button id="fone" onclick="f()">F1</button></td>
+</tr></table>
+</div>
+<script>
+var s = './cgi-bin/run.cgi?c=';
+var q = document.getElementById.bind(document);
+var x = new XMLHttpRequest();
+var c, w = 1000;
+x.onreadystatechange = function(){
+if(this.readyState==4 && this.status==200){
+u(q('dsp').checked);
+}};
+
+
+function d(t){
+x.open("GET",s+"dsp"+(t?'y':'n'),true);
+x.send();
+if(t){c=setTimeout(l,90*w);}
+}
+function o(){
+u(1);
+x.open("GET",s+"open",true);
+x.send();
+c=setTimeout(l,10*w);
+}
+function f(){
+x.open("GET",s+"fone",true);
+x.send();
+}
+function l(){u(0);d(0);}
+function u(t){
+clearTimeout(c);
+q('dsp').checked=t;
+q('cam').className=(t?'on':'');
+q('open').disabled=!t;
+}
+
+var dOn = false;
+u(dOn);
+</script>
+</body>
+</html>

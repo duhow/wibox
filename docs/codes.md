@@ -6,7 +6,11 @@ Direction `in` means read, `out` means write.
 | Code | Direction | Name | Description |
 |------|-----------|------|-------------|
 | `FB 11 00 1C` | in | AlarmReport | Calling at door from the outside. Additional params: ch = 1 |
+| `FB 23 00 2E` | in | CMD_STOP_RING 0x00 | Pick the call from physical intercom phone. Additional params: ch = 1 |
 | `FB 13 00 1E` | in | HANG_UP 0x00 | Received when door times out without response (30 seconds) |
+| `FB 10 04 1F` | out | CUart::Start | Initialize the hardware? Run at Sofia start. |
+| `FB 16 00 21` | in | MCU_STATE 0x00 | unknown, appears after init |
+| `FB 19 01 25` | in | PUSH_STATE 0x01 | unknown, apppears after init |
 | `FB 10 00 1B` | out | unknown | Set after rebooting - CRecord::SetMode(2) |
 | `FB 24 01 30` | in | CMD_DOWN_LONG 0x01 | Received every 5 minutes. |
 | `FB 24 02 31` | in | CMD_DOWN_LONG 0x02 | Received every 5 minutes after previous one. |
@@ -22,12 +26,8 @@ Direction `in` means read, `out` means write.
 Other unknown found:
 
 ```
-HANG_UP 0x%02x
 SAVE_ADDR 0x%02x
 CMD_RESET
 STA_TO_AP
-CMD_STOP_RING 0x%02x
-MCU_STATE 0x%02x
-PUSH_STATE 0x%02x
 CMD_FACTORY_MODE 0x%02x
 ```

@@ -42,7 +42,7 @@ Default script process is as follows:
 - Run `telnetd`, which is both a security concern and the key to get into the board remotely.
 - Create empty data folders in RamFS.
 - Load module drivers, audio, media, and then other external drivers,
-  a **Watchdog** `goke_wdt.ko`, the video decoder with OSD `BIT1628A`, and the Wireless driver.
+  a **Watchdog** `goke_wdt.ko`, the video decoder with OSD `BIT1628A`, and a touch driver.
 - Copy web content (seems to be factory-removed) to Ram.
 - Copy Wifi start scripts to Ram. Not executing at this point.
 - Start `mdev -s`
@@ -69,11 +69,17 @@ It exposes several ports:
 - `UDP/5000`, allows to locate this device in the network (autodiscovery).
 - `UDP/5002` - unknown.
 
-During the running process, Sofia starts WiFi `cd /var/wifi && sh go.sh` with the following commands:
+During the running process, Sofia starts WiFi as follows:
 
+- Load wireless module / driver `rtl8188fu.ko`, which was not loaded previously.
+- Start script with `cd /var/wifi && sh go.sh`, which does
 - Delete content and recreate folder `/var/run/wpa_supplicant`
 - Kill all processes `hostapd udhcpd udhcpc wpa_supplicant`, wait 1 second
 - Run `wpa_supplicant -i wlan0 -c /var/wifi/wpa_supplicant.conf -B`
+- After this script finishes, decrypts internal Config, and sends Wireless credentials via
+  `wpa_supplicant` socket, located in folder `/var/run/wpa_supplicant/wlan0`.
+- When AP connection is established, runs DHCP to get an IP address with a custom script,
+  `udhcpc -i wlan0 -s /var/wifi/udhcpc.conf`
 
 Sofia also runs the following processes:
 

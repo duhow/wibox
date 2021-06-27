@@ -81,10 +81,104 @@ During the running process, Sofia starts WiFi as follows:
 - When AP connection is established, runs DHCP to get an IP address with a custom script,
   `udhcpc -i wlan0 -s /var/wifi/udhcpc.conf`
 
-Sofia also runs the following processes:
+Sofia will also check file `/var/cloud/states` managed by NTS Cloud process, and ensure status is "connected":
 
 ```
-cd /usr/cloud/ && ./ntsclientcon_goke_static -E %s
+[STATE]
+ConnState=2
+FailCode=0
+```
+
+## system_sofia
+
+In order to run some commands, there's an additional process called `system_sofia`.
+This process exposes port `TCP/6683` which allows to run commands with `system` C function.
+
+Code is somewhat protected to only allow connections from `127.0.0.XXX`, so even if a user sends
+a valid payload, an error string will appear to the application and not allow to run the command.
+
+Packets have a fixed length of **1032** bytes with padded `NULL` characters.
+Magic string is `xV4\x12`.
+
+A simple Python script to craft packages would be:
+
+```python
+import sys
+
+VAR_LOG = [b"\x01", b"\x02"]
+MAGIC_STR = b'xV4\x12'
+
+log = True
+
+PACKET = MAGIC_STR + VAR_LOG[int(log)] + (b"\0"*3) + bytes(" ".join(sys.argv[1:]), "utf-8")
+PACKET += b'\x00' * (1032 - len(PACKET))
+
+sys.stdout.buffer.write(PACKET)
+```
+
+Some of the commands run by **Sofia** are:
+
+```
+rm /var/Sofia
+ip -6 addr del 2001:0db8:0:f101::a/64 dev eth0
+ip -6 addr add 2001:0db8:0:f101::a/64 dev eth0
+umount -l /var/fat32_0
+mkdir -p /var/fat32_0
+killall ntsclientcon_goke_static
+echo 3 > /proc/sys/vm/drop_caches
+cd /usr/cloud/ && ./ntsclientcon_goke_static -E ${m_dVerifyCode}
+sed -ri 's/(ssid=).*/\\1IDS7938${SERIAL_NUMBER_4}/' /var/wifi/hostapd.conf
+sed -ri 's/(wpa_passphrase=).*/\\1${UDID_SN}/' /var/wifi/hostapd.conf
+insmod /ko/extdrv/rtl8188fu.ko
+ifconfig eth0 down
+cd /var/wifi && sh go.sh
+```
+
+## NTS Client
+
+This is a Cloud agent which acts between Cloud and device local port `TCP/34567`.
+It also opens a random port locally.
+Requires to have a Verify Code `AuthPwd`, can be provided when launching program with `-E` param.
+`DevId` is already set from the config file in persistent storage.
+
+```
+TDK_SR_StartService ....
+[Prompt]  Start service.......
+[Prompt]  Little-endian!
+[Prompt]  AdapterName: eth0, Ip: 192.168.1.10.
+[Prompt]  AdapterName: wlan0, Ip: 192.168.10.24.
+[Prompt]  LocalIpaddr: 192.168.1.10.
+[Prompt]  LocalIpaddr: 192.168.10.24.
+[Prompt]  v2.4.1.12
+[Log]  [NETCOM] <Mode[NETCOM]> <Ver[1.0.1.2 2134]> .
+[Prompt]  Start service complete!
+[Prompt]  Start test server......
+[Prompt]  Test server success.
+[Prompt]  Server udp ip[47.254.155.166], port[8300]; https ip[47.254.155.166], port[443].
+[Prompt]  Start network detection.
+[Prompt]  The current number of connections: 0.
+[Prompt]  Detection of network end.
+[Prompt]  Nat check over, Nat type: Port Rest cone nat, public ip: 1.2.3.4:38630.
+[Prompt]  Starting login authentication server.
+[Prompt]  [NETCOM] HttpCli ==> connect addr 47.254.155.166, port 443  ==> fd 7  nRet[1]
+[Prompt]  [NETCOM] HttpCli ==> connect addr 47.254.155.166, port 443  ==> fd 8  nRet[1]
+[Prompt]  Connection authentication server successfully.
+[Prompt]  Login authentication server sends a request message.
+[Prompt]  Device is registered to the auth server success.
+[Prompt]  Active resp msg: Public addr: 1.2.3.4:51392, RTT: 1000757ms.
+[Prompt]  The current number of connections: 0.
+[Prompt]  The current number of connections: 0.
+[Prompt]  The current number of connections: 0.
+[Prompt]  The current number of connections: 0.
+[Prompt]  Request to establish a P2P connection.
+[Prompt]  Create logical TCP connection request.
+[Prompt]  Connecting devices results event, connecting results: success.
+[Prompt]  Open the connection to the end.
+[Prompt]  Create logical TCP connection request.
+[Prompt]  Connecting devices results event, connecting results: success.
+[Prompt]  The current number of connections: 1.
+[Prompt]  Open the connection to the end.
+[Prompt]  Active resp msg: Public addr: 1.2.3.4:38600, RTT: 1526900ms.
 ```
 
 ## interDebug

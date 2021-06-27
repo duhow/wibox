@@ -21,6 +21,11 @@ done
 
 sleep 1
 
+# update hostname, read config line 4 straight to the UDID
+UDID=$(dd if=/dev/mtdblock6 skip=324 count=12 bs=1 2>/dev/null)
+[ -z "${UDID}" ] && UDID="000000000000"
+echo "IDS7938${UDID:8:4}" > /proc/sys/kernel/hostname
+
 #web
 cd /usr/web && ./setup.sh
 
@@ -40,8 +45,8 @@ wpa_supplicant -i wlan0 -c ${WPA_CONF} -B
 udhcpc -i wlan0 -s /var/wifi/udhcpc.conf
 
 # increase network buffer
-echo  1084576 > /proc/sys/net/core/rmem_max
-echo  1084576 > /proc/sys/net/core/wmem_max
+echo 1084576 > /proc/sys/net/core/rmem_max
+echo 1084576 > /proc/sys/net/core/wmem_max
 
 echo 3 > /proc/sys/vm/drop_caches; free
 

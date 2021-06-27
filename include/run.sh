@@ -45,20 +45,6 @@ echo  1084576 > /proc/sys/net/core/wmem_max
 
 echo 3 > /proc/sys/vm/drop_caches; free
 
+/usr/listener.sh &
+
 [ -f "/mnt/mtd/post.sh" ] && /mnt/mtd/post.sh
-
-while true; do
-  INPUT_CMD=$(head -c 4 /dev/ttySGK1)
-  echo ${INPUT_CMD} > /tmp/input_cmd
-
-  RESET_VAL=$(echo -e "\xFB\x19\x00\x24")
-
-  if [ "$INPUT_CMD" = "$RESET_VAL" ]; then
-    echo "Factory rebooting" > /dev/kmsg
-    touch /mnt/mtd/factory
-    sync
-    reboot
-  fi
-
-  sleep 1
-done

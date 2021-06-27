@@ -20,28 +20,32 @@ button:not([disabled]){background:#02e;}
 table{width:100%;}
 td:first-child{text-align:left;}
 td:last-child{text-align:right;}
+#alarm{margin-top:15px;background:#444;}
+#alarm tr td{padding: 4px;}
 </style>
 </head>
 <body>
 <h1>FERMAX</h1>
 <div id="view">
 <img id="cam" src="" alt="Camera">
-<table><tr>
+<table id="btn"><tr>
 <td><input type="checkbox" id="dsp" onchange="d(this.checked)"><label for="dsp"></label></td>
 <td><button id="open" onclick="o()" disabled>Open</button></td>
 <td><button id="fone" onclick="f()">F1</button></td>
 </tr></table>
+<table id="alarm"></table>
 </div>
 <script>
 var s = './cgi-bin/run.cgi?c=';
 var q = document.getElementById.bind(document);
 var x = new XMLHttpRequest();
+var ax = new XMLHttpRequest();
 var c, w = 1000;
+var as = ["", "Ring", "Missed", "Answered", "Open door"];
 x.onreadystatechange = function(){
 if(this.readyState==4 && this.status==200){
 u(q('dsp').checked);
 }};
-
 
 function d(t){
 x.open("GET",s+"dsp"+(t?'y':'n'),true);
@@ -66,8 +70,28 @@ q('cam').className=(t?'on':'');
 q('open').disabled=!t;
 }
 
+function a(){
+ax.open("GET","./alarms?"+Date.now(),true);
+ax.send();
+}
+ax.onreadystatechange = function(){
+if(this.readyState==4){
+at="";
+if(!this.responseText){at="<tr><td>No calls available.</td></tr>";}
+else{
+ad=this.responseText.split(/\r?\n|\r/);
+for(var ac=ad.length-1;ac>=Math.max(ad.length-15,0);ac--){
+if(!ad[ac]){continue;}
+var [act,acs] = ad[ac].split(",");
+act=new Date(act*1000);
+at+="<tr><td>"+act.toLocaleString()+"</td><td>"+as[acs]+"</td></tr>";
+}}
+q("alarm").innerHTML=at;
+}};
+
 var dOn = false;
 u(dOn);
+a();
 </script>
 </body>
 </html>

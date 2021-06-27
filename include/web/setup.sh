@@ -7,6 +7,7 @@ mkdir -p ${WEBFOLDER}/cgi-bin
 
 cp -fv ${SRCFOLDER}/index.html ${WEBFOLDER}
 cp -fv ${SRCFOLDER}/run.cgi ${WEBFOLDER}/cgi-bin
+ln -sf /mnt/mtd/alarm.log ${WEBFOLDER}/alarms
 
 PORT=80
 

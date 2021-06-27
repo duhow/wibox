@@ -45,6 +45,6 @@ echo  1084576 > /proc/sys/net/core/wmem_max
 
 echo 3 > /proc/sys/vm/drop_caches; free
 
-/usr/listener.sh &
+/usr/bin/listener.sh &
 
 [ -f "/mnt/mtd/post.sh" ] && /mnt/mtd/post.sh

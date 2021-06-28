@@ -10,8 +10,10 @@ report_alarm(){ echo "$(date +%s),$1" >> $ALARM_FILE; }
 get_code(){ echo -e $(grep "^$1 " ${CODES_FILE} | cut -d' ' -f2-); }
 is_code(){ [ "`cat ${INPUT_FILE}`" = "`get_code $1`" ]; }
 reverse_code(){ 
-  CODE=$(od -t x1 < ${INPUT_FILE} | head -n1 | cut -d' ' -f2- | tr [:lower:] [:upper:] | sed 's/^/\\x/' | sed 's/ /\\x/g')
-  grep " ${CODE}" ${CODES_FILE} | cut -d' ' -f1
+  CODE=$(od -t x1 < ${INPUT_FILE} | head -n1 | cut -d' ' -f2- | tr [:lower:] [:upper:] | sed 's/^/\\\\x/' | sed 's/ /\\\\x/g')
+  CODEGET=$(grep " ${CODE}" ${CODES_FILE} | cut -d' ' -f1)
+  [ -z "${CODEGET}" ] && CODEGET="unknown - ${CODE}"
+  echo ${CODEGET}
 }
 
 open_door(){
@@ -28,6 +30,7 @@ log "Starting listener"
 while true; do
   head -c 4 ${INTERCOM_DEVICE} > ${INPUT_FILE}
 
+  log "Code get is `reverse_code`"
   if [ ! -f "$INPUT_FILE" ]; then
     log "Command is empty"
   elif is_code CMD_RESET; then
@@ -52,5 +55,7 @@ while true; do
     log "Phone was picked up, stop alarm"
     report_alarm 3
   fi
+
+  mv ${INPUT_FILE} ${INPUT_FILE}.prev
 
 done

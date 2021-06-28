@@ -2,43 +2,20 @@
 
 command=`echo "$QUERY_STRING" | awk '{split($0,array,"&")} END{print array[1]}' | awk '{split($0,array,"=")} END{print array[2]}'`
 
-if [ "$command" = "open" ]; then
-PLD=`echo "\xFB\x12\x01\x1E"`
-fi
-if [ "$command" = "dspy" ]; then
-PLD=`echo "\xFB\x14\x01\x20"`
-fi
-if [ "$command" = "dspn" ]; then
-PLD=`echo "\xFB\x14\x00\x1F"`
-fi
-if [ "$command" = "fone" ]; then
-echo -e "\xFB\x17\x01\x23" > /dev/ttySGK1
-sleep 3
-echo -e "\xFB\x17\x00\x22" > /dev/ttySGK1
-echo "Content-type: text/html" && echo ""
-exit
-fi
-if [ "$command" = "guard" ]; then
-PLD=`echo "\xFB\x15\x00\x20"`
-fi
+_send(){ echo -e "$1" > /dev/ttySGK1 || echo "Status: 500 Internal Server Error"; }
+func_open(){ _send "\xFB\x12\x01\x1E"; }
+func_dspy(){ _send "\xFB\x14\x01\x20"; }
+func_dspn(){ _send "\xFB\x14\x00\x1F"; }
+func_fone(){ _send "\xFB\x17\x01\x23"; sleep 3; _send "\xFB\x17\x00\x22"; }
+func_guard(){ _send "\xFB\x15\x00\x20"; }
 
-if [ "$command" = "unlock" ]; then
-echo -e "\xFB\x14\x01\x20" > /dev/ttySGK1
-sleep 3
-echo -e "\xFB\x12\x01\x1E" > /dev/ttySGK1
-sleep 1
-echo -e "\xFB\x14\x00\x1F" > /dev/ttySGK1
-echo "Content-type: text/html" && echo ""
-exit
-fi
+func_unlock(){ func_dspy; sleep 2; func_open; sleep 1; func_dspn; }
 
-if [ -z "$PLD" ]; then
-echo "Status: 404 Not Found"
-echo ""
-exit
+if func_${command}; then
+  echo "Content-type: text/html"
+else
+  echo "Status: 404 Not Found"
 fi
-
-echo -e $PLD > /dev/ttySGK1 && echo "Content-type: text/html" || echo "Status: 500 Internal Server Error"
 
 # add empty body response
 echo ""

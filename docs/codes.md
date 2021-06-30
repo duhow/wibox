@@ -3,7 +3,11 @@
 Device is `/dev/ttySGK1`.
 Direction `in` means read, `out` means write.
 
-`uCrc` is calculated with sum of all bytes except last, and last value. (?)
+All codes start with hex `FB` and end with a CRC code. Sofia app outputs it as `uCrc` with two integer values.
+`uCrc` output value is sum of all bytes, and sum of 11 (`xB`) and the data values.
+
+Given code `FB 20 00`, CRC last value = `B + 20 + 00` = `0x2B`.
+`uCrc = 326, 43`
 
 | Code | Direction | Name | Description |
 |------|-----------|------|-------------|
@@ -15,6 +19,8 @@ Direction `in` means read, `out` means write.
 | `FB 16 01 22` | in | MCU_STATE 0x01 | After clicking button P2 (reset). LED blinks to red. |
 | `FB 19 00 24` | in/out | PUSH_STATE 0x00 | Wifi/calls are disabled. Can be set. |
 | `FB 19 01 25` | in/out | PUSH_STATE 0x01 | Wifi/calls are enabled. Can be set. |
+| `FB 10 5E 79` | out | Unknown | Unknown. Appears after init. |
+| `FB 18 5E 81` | in | SAVE_ADDR 0x5e | Unknown. Appears after init. |
 | `FB 10 00 1B` | out | unknown | Set after rebooting - CRecord::SetMode(2) |
 | `FB 24 01 30` | in | CMD_DOWN_LONG 0x01 | Received every 5 minutes. |
 | `FB 24 02 31` | in | CMD_DOWN_LONG 0x02 | Received every 5 minutes after previous one. |
@@ -32,6 +38,5 @@ Direction `in` means read, `out` means write.
 Other unknown found:
 
 ```
-SAVE_ADDR 0x%02x
 CMD_FACTORY_MODE 0x%02x
 ```

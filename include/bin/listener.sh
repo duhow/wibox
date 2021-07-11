@@ -4,6 +4,7 @@ INTERCOM_DEVICE=/dev/ttySGK1
 INPUT_FILE=/tmp/input_cmd
 ALARM_FILE=/mnt/mtd/alarm.log
 CODES_FILE=/usr/wibox_codes.txt
+MQTT_ENABLED=""
 
 log(){ echo "$*" | tee /dev/kmsg; }
 report_alarm(){ echo "$(date +%s),$1" >> $ALARM_FILE; }
@@ -25,7 +26,23 @@ open_door(){
   get_code STOP_CALL > ${INTERCOM_DEVICE}
 }
 
+mqtt_ding(){ mosquitto_pub ${MQTT_OPTS} -t "`mqtt_base_topic`/ding" -m $1 & }
+
 log "Starting listener"
+
+which mosquitto_pub >/dev/null 2&>/dev/null
+if [ "$?" = 0 ]; then
+  source ./mqtt_functions.sh
+  mosquitto_pub ${MQTT_OPTS} -t "`mqtt_base_topic`" -m init
+  if [ "$?" = 0 ]; then
+    MQTT_ENABLED=1
+    log "MQTT enabled"
+    ./listener_mqtt.sh &
+    (sleep 6 && pgrep mosquitto_sub >/dev/null && mosquitto_pub ${MQTT_OPTS} -t "`mqtt_base_topic`" -m online) &
+  else
+    log "MQTT error $? - skipping"
+  fi
+fi
 
 while true; do
   head -c 4 ${INTERCOM_DEVICE} > ${INPUT_FILE}
@@ -37,22 +54,35 @@ while true; do
     log "Factory rebooting"
     touch /mnt/mtd/factory
     sync
+    killall mosquitto_sub
     reboot
+  elif is_code START_CALL; then
+    log "Intercom opened"
+    if [ -n "${ENABLE_MQTT}" ]; then
+      mosquitto_pub ${MQTT_OPTS} -t "`mqtt_base_topic`/door" -m online
+    fi
   elif is_code ALARM_REPORT; then
     log "Alarm reported, calling at door"
+    if [ -n "${ENABLE_MQTT}" ]; then
+      mqtt_ding ON
+      mosquitto_pub ${MQTT_OPTS} -t "`mqtt_base_topic`/ding/last" -m "$(date -Iseconds)" &
+    fi
     if [ -f "/tmp/open_once" ] || [ -f "/tmp/open_door" ]; then
       log "Automatic open"
       report_alarm 4
       [ -f "/tmp/open_once" ] && rm -f /tmp/open_once
       open_door
+      [ -n "${ENABLE_MQTT}" ] && mqtt_ding OFF
     else
       report_alarm 1
     fi
   elif is_code HANG_UP; then
     log "Call missed"
+    [ -n "${ENABLE_MQTT}" ] && mqtt_ding OFF
     report_alarm 2
   elif is_code CMD_STOP_RING; then
     log "Phone was picked up, stop alarm"
+    [ -n "${ENABLE_MQTT}" ] && mqtt_ding OFF
     report_alarm 3
   fi
 

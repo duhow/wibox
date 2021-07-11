@@ -24,3 +24,7 @@ MQTT_OPTS="-I wibox_${MODEL}"
 [ -n "${MQTT_USER}" ] && MQTT_OPTS="${MQTT_OPTS} -u ${MQTT_USER}"
 [ -n "${MQTT_PASS}" ] && MQTT_OPTS="${MQTT_OPTS} -P ${MQTT_PASS}"
 
+mqtt_base_topic(){ echo -n "wibox/${MODEL}"; }
+mqtt_base_name(){ echo -n "WiBox ${MODEL} $1"; }
+mqtt_base_uniqueid(){ echo -n "wibox_${MODEL}_$1" | tr '/' '_'; }
+

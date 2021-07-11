@@ -71,7 +71,7 @@ while true; do
     log "Alarm reported, calling at door"
     if [ -n "${ENABLE_MQTT}" ]; then
       mqtt_ding ON
-      mosquitto_pub ${MQTT_OPTS} -t "`mqtt_base_topic`/ding/last" -m "$(date -Iseconds)" &
+      mosquitto_pub -r ${MQTT_OPTS} -t "`mqtt_base_topic`/ding/last" -m "$(date -Iseconds)" &
     fi
     if [ -f "/tmp/open_once" ] || [ -f "/tmp/open_door" ]; then
       log "Automatic open"

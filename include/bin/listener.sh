@@ -5,6 +5,7 @@ INPUT_FILE=/tmp/input_cmd
 ALARM_FILE=/mnt/mtd/alarm.log
 CODES_FILE=/usr/wibox_codes.txt
 MQTT_ENABLED=""
+CALL_OPEN_DOOR=""
 
 log(){ echo "$*" | tee /dev/kmsg; }
 report_alarm(){ echo "$(date +%s),$1" >> $ALARM_FILE; }
@@ -15,15 +16,6 @@ reverse_code(){
   CODEGET=$(grep " ${CODE}" ${CODES_FILE} | cut -d' ' -f1)
   [ -z "${CODEGET}" ] && CODEGET="unknown - ${CODE}"
   echo ${CODEGET}
-}
-
-open_door(){
-  log "Opening door"
-  get_code START_CALL > ${INTERCOM_DEVICE}
-  sleep 1
-  get_code TRANSFER_CMD_UNLOCK_DOOR > ${INTERCOM_DEVICE}
-  sleep 1
-  get_code STOP_CALL > ${INTERCOM_DEVICE}
 }
 
 mqtt_ding(){ mosquitto_pub ${MQTT_OPTS} -t "`mqtt_base_topic`/ding" -m $1 & }
@@ -61,6 +53,20 @@ while true; do
     if [ -n "${ENABLE_MQTT}" ]; then
       mosquitto_pub ${MQTT_OPTS} -t "`mqtt_base_topic`/door" -m online
     fi
+    if [ -n "${CALL_OPEN_DOOR}" ]; then
+      log "Opening door"
+      sleep 0.5
+      get_code TRANSFER_CMD_UNLOCK_DOOR > ${INTERCOM_DEVICE}
+      sleep 1
+      get_code STOP_CALL > ${INTERCOM_DEVICE}
+      [ -f "/tmp/open_once" ] && rm -f /tmp/open_once
+
+      if [ -n "${ENABLE_MQTT}" ]; then
+        mqtt_ding OFF
+        mosquitto_pub ${MQTT_OPTS} -t "`mqtt_base_topic`/door" -m offline
+      fi
+      CALL_OPEN_DOOR=""
+    fi
   elif is_code ALARM_REPORT; then
     log "Alarm reported, calling at door"
     if [ -n "${ENABLE_MQTT}" ]; then
@@ -70,9 +76,8 @@ while true; do
     if [ -f "/tmp/open_once" ] || [ -f "/tmp/open_door" ]; then
       log "Automatic open"
       report_alarm 4
-      [ -f "/tmp/open_once" ] && rm -f /tmp/open_once
-      open_door
-      [ -n "${ENABLE_MQTT}" ] && mqtt_ding OFF
+      CALL_OPEN_DOOR=1
+      get_code START_CALL > ${INTERCOM_DEVICE}
     else
       report_alarm 1
     fi

@@ -50,7 +50,7 @@ while true; do
     reboot
   elif is_code START_CALL; then
     log "Intercom opened"
-    if [ -n "${ENABLE_MQTT}" ]; then
+    if [ -n "${MQTT_ENABLED}" ]; then
       mosquitto_pub ${MQTT_OPTS} -t "`mqtt_base_topic`/door" -m online
     fi
     if [ -n "${CALL_OPEN_DOOR}" ]; then
@@ -61,7 +61,7 @@ while true; do
       get_code STOP_CALL > ${INTERCOM_DEVICE}
       [ -f "/tmp/open_once" ] && rm -f /tmp/open_once
 
-      if [ -n "${ENABLE_MQTT}" ]; then
+      if [ -n "${MQTT_ENABLED}" ]; then
         mqtt_ding OFF
         mosquitto_pub ${MQTT_OPTS} -t "`mqtt_base_topic`/door" -m offline
       fi
@@ -69,7 +69,7 @@ while true; do
     fi
   elif is_code ALARM_REPORT; then
     log "Alarm reported, calling at door"
-    if [ -n "${ENABLE_MQTT}" ]; then
+    if [ -n "${MQTT_ENABLED}" ]; then
       mqtt_ding ON
       mosquitto_pub -r ${MQTT_OPTS} -t "`mqtt_base_topic`/ding/last" -m "$(date -Iseconds)" &
     fi
@@ -83,11 +83,11 @@ while true; do
     fi
   elif is_code HANG_UP; then
     log "Call missed"
-    [ -n "${ENABLE_MQTT}" ] && mqtt_ding OFF
+    [ -n "${MQTT_ENABLED}" ] && mqtt_ding OFF
     report_alarm 2
   elif is_code CMD_STOP_RING; then
     log "Phone was picked up, stop alarm"
-    [ -n "${ENABLE_MQTT}" ] && mqtt_ding OFF
+    [ -n "${MQTT_ENABLED}" ] && mqtt_ding OFF
     report_alarm 3
   fi
 

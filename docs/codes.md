@@ -11,6 +11,7 @@ Given code `FB 20 00`, CRC last value = `B + 20 + 00` = `0x2B`.
 
 | Code | Direction | Name | Description |
 |------|-----------|------|-------------|
+| `FB 00 00 FF` | in | unknown | Unknown, appeared after closing call. |
 | `FB 10 00 1B` | out | unknown | Set after rebooting - CRecord::SetMode(2) |
 | `FB 10 04 1F` | out | CUart::Start | Initialize the hardware? Run at Sofia start. |
 | `FB 10 5E 79` | out | Unknown | Unknown. Appears after init. |

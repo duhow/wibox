@@ -17,6 +17,7 @@ Given code `FB 20 00`, CRC last value = `B + 20 + 00` = `0x2B`.
 | `FB 11 00 1C` | in | AlarmReport | Calling at door from the outside. Additional params: ch = 1 |
 | `FB 12 01 1E` | out | TRANSFER_CMD_UNLOCK_DOOR | Open the door, relay NO 1. |
 | `FB 13 00 1E` | in | HANG_UP 0x00 | Received when door times out without response (30 seconds) |
+| `FB 13 01 1F` | in | HANG_UP 0x01 | Received when opening door / StartStreamReader? |
 | `FB 14 00 1F` | out | StopStreamReader | End intercom call. |
 | `FB 14 01 20` | in/out | StartStreamReader | Start a door call. Received after call, success? Additional params. chn = 1, stream = 1 |
 | `FB 15 00 20` | out | CallGuard | Action to call guard. |

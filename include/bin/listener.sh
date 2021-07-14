@@ -81,7 +81,7 @@ while true; do
     else
       report_alarm 1
     fi
-  elif is_code HANG_UP; then
+  elif is_code HANG_UP_0; then
     log "Call missed"
     [ -n "${MQTT_ENABLED}" ] && mqtt_ding OFF
     report_alarm 2

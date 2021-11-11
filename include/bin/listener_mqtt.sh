@@ -2,6 +2,8 @@
 
 INTERCOM_DEVICE=/dev/ttySGK1
 CODES_FILE=/usr/wibox_codes.txt
+CRONFILE=/var/spool/cron/crontabs/root
+WIFISTATS_CRON_MIN=2
 
 log(){ echo "$*" | tee /dev/kmsg; }
 get_code(){ echo -e $(grep "^$1 " ${CODES_FILE} | cut -d' ' -f2-); }
@@ -47,6 +49,13 @@ mosquitto_sub -v -R --will-topic ${TOPIC} --will-payload offline --will-retain $
       if [ "$val" = "ONLINE" ]; then
         log "Connected successfully, configuring Home Assistant MQTT device"
         ./mqtt_config_homeassistant.sh
+        if ! grep -q "mqtt_wifi_stats.sh" ${CRONFILE}; then
+          log "Configuring wifi stats reporter and restarting cron"
+          echo "*/${WIFISTATS_CRON_MIN} * * * * /usr/bin/mqtt_wifi_stats.sh" >> ${CRONFILE}
+          killall crond
+          crond -b
+        fi
+
       elif [ "$val" = "OFFLINE" ]; then
         log "Disconnected from MQTT. Rebooting in 60 seconds."
         sleep 60

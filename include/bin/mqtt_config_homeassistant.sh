@@ -8,12 +8,12 @@ setup_topic(){
 echo -n "${BASETOPIC:-homeassistant}/$1/`mqtt_base_uniqueid $2`/config"
 }
 
-get_device_ip(){
-ip -4 addr show wlan0 | grep "inet " | awk '{print $2}' | cut -d '/' -f1
-}
+IFACE=wlan0
+get_device_ip(){ ip -4 addr show ${IFACE} | grep "inet " | awk '{print $2}' | cut -d '/' -f1; }
+get_device_mac(){ cat /sys/class/net/${IFACE}/address; }
 
 setup_device_base(){
-echo -n {\""identifiers\"":[\""wibox_${MODEL}\""],\""name\"":\""${MODEL}\"",\""model\"":\""WiBox 7938\"",\""manufacturer\"":\""Fermax\"",\""suggested_area\"":\""Entrance\"",\""configuration_url\"":\""http://`get_device_ip`\""}
+echo -n {\""identifiers\"":[\""wibox_${MODEL}\""],\""connections\"":[[\""mac\"",\""`get_device_mac`\""]],\""name\"":\""${MODEL}\"",\""model\"":\""WiBox 7938\"",\""manufacturer\"":\""Fermax\"",\""suggested_area\"":\""Entrance\"",\""configuration_url\"":\""http://`get_device_ip`\""}
 }
 
 setup_switch_message(){

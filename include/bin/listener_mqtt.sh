@@ -17,7 +17,7 @@ log "Starting MQTT listener"
 
 TOPIC=`mqtt_base_topic`
 
-mosquitto_sub -v -R --will-topic ${TOPIC} --will-payload offline --will-retain ${MQTT_OPTS} -t "${TOPIC}/#" | while read -r line; do
+mosquitto_sub -v -R --will-topic ${TOPIC} --will-payload offline --will-retain ${MQTT_OPTS} -t "${TOPIC}" -t "${TOPIC}/#" | while read -r line; do
   val=$(echo "$line" | awk '{print $2}' | tr '[:lower:]' '[:upper:]')
   case $line in
     "${TOPIC}/door/set"*)
@@ -41,6 +41,16 @@ mosquitto_sub -v -R --will-topic ${TOPIC} --will-payload offline --will-retain $
         get_code START_F1 > ${INTERCOM_DEVICE}
       elif [ "$val" = "OFF" ]; then
         get_code STOP_F1 > ${INTERCOM_DEVICE}
+      fi
+    ;;
+    "${TOPIC}"*)
+      if [ "$val" = "ONLINE" ]; then
+        log "Connected successfully, configuring Home Assistant MQTT device"
+        ./mqtt_config_homeassistant.sh
+      elif [ "$val" = "OFFLINE" ]; then
+        log "Disconnected from MQTT. Rebooting in 60 seconds."
+        sleep 60
+        reboot
       fi
     ;;
   esac

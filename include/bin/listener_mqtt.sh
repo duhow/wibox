@@ -43,7 +43,7 @@ mosquitto_sub -v -R --will-topic ${TOPIC} --will-payload offline --will-retain $
         get_code STOP_F1 > ${INTERCOM_DEVICE}
       fi
     ;;
-    "${TOPIC}"*)
+    "${TOPIC}")
       if [ "$val" = "ONLINE" ]; then
         log "Connected successfully, configuring Home Assistant MQTT device"
         ./mqtt_config_homeassistant.sh

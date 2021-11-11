@@ -52,6 +52,13 @@ AVTOPIC="`mqtt_base_topic`"
 echo -n {\""state_topic\"": \""${TOPIC}\"", \""availability_topic\"": \""${AVTOPIC}\"", \""device_class\"": \""$3\"", \""icon\"": \""mdi:$4\"", \""name\"": \""`mqtt_base_name "$2"`\"", \""unique_id\"": \""`mqtt_base_uniqueid $1`\"", \""device\"": `setup_device_base`}
 }
 
+setup_sensor_advanced_message(){
+# topic, name, device_class, icon, value_template, unit_of_measurement, json_attributes_topic
+TOPIC="`mqtt_base_topic`/$1"
+AVTOPIC="`mqtt_base_topic`"
+echo -n {\""state_topic\"": \""${TOPIC}\"", \""availability_topic\"": \""${AVTOPIC}\"", \""device_class\"": \""$3\"", \""icon\"": \""mdi:$4\"", \""name\"": \""`mqtt_base_name "$2"`\"", \""unique_id\"": \""`mqtt_base_uniqueid $1`\"", \""value_template\"": \""$5\"", \""unit_of_measurement\"": \""$6\"", \""json_attributes_topic\"": \""`mqtt_base_topic`/$7\"", \""device\"": `setup_device_base`}
+}
+
 mqtt_send(){ mosquitto_pub ${MQTT_OPTS} -t "${MTOPIC}" -m "${MDATA}"; }
 
 for BTN in 1 2; do
@@ -80,4 +87,8 @@ mqtt_send
 
 MTOPIC=`setup_topic sensor last_ding`
 MDATA=`setup_sensor_message ding/last "Last Ding" timestamp history`
+mqtt_send
+
+MTOPIC=`setup_topic sensor linkquality`
+MDATA=`setup_sensor_advanced_message wifi/stats "RSSI" signal_strength wifi "{{ value_json.RSSI }}" dBm wifi/stats`
 mqtt_send

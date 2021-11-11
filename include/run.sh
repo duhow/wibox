@@ -51,7 +51,12 @@ echo 1084576 > /proc/sys/net/core/wmem_max
 echo 3 > /proc/sys/vm/drop_caches; free
 
 # cron
-mkdir -p /var/spool/cron/crontabs
+CRONTABS="/var/spool/cron/crontabs"
+mkdir -p ${CRONTABS}
+cat << EOF >> ${CRONTABS}/root
+15 3 * * 6 reboot
+*/10 * * * * /usr/bin/healthcheck.sh
+EOF
 crond -b
 
 /usr/bin/listener.sh &

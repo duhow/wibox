@@ -22,6 +22,9 @@ mqtt_ding(){ mosquitto_pub ${MQTT_OPTS} -t "`mqtt_base_topic`/ding" -m $1 & }
 
 log "Starting listener"
 
+# change workdir to script dir
+cd `dirname "$0"`
+
 which mosquitto_pub >/dev/null 2&>/dev/null
 if [ "$?" = 0 ]; then
   source ./mqtt_functions.sh

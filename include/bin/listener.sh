@@ -4,6 +4,7 @@ INTERCOM_DEVICE=/dev/ttySGK1
 INPUT_FILE=/tmp/input_cmd
 ALARM_FILE=/mnt/mtd/alarm.log
 CODES_FILE=/usr/wibox_codes.txt
+PIDFILE=/tmp/listener.pid
 MQTT_ENABLED=""
 CALL_OPEN_DOOR=""
 
@@ -19,6 +20,20 @@ reverse_code(){
 }
 
 mqtt_ding(){ mosquitto_pub ${MQTT_OPTS} -t "`mqtt_base_topic`/ding" -m $1 & }
+
+# Check running once
+if [ -f "${PIDFILE}" ]; then
+  if [ -e "/proc/`cat ${PIDFILE}`" ]; then
+    log "Listener is already running! Closing."
+    exit 0
+  else
+    log "Listener was running and closed!"
+    for NAME in head; do
+      killall ${NAME} 2>/dev/null
+    done
+  fi
+fi
+echo "$$" > ${PIDFILE}
 
 log "Starting listener"
 

@@ -1,6 +1,7 @@
 #!/bin/sh
 
 INTERCOM_DEVICE=/dev/ttySGK1
+PIDFILE=/tmp/listener_mqtt.pid
 CODES_FILE=/usr/wibox_codes.txt
 CRONFILE=/var/spool/cron/crontabs/root
 WIFISTATS_CRON_MIN=2
@@ -13,6 +14,20 @@ reverse_code(){
   [ -z "${CODEGET}" ] && CODEGET="unknown - ${CODE}"
   echo ${CODEGET}
 }
+
+# Check running once
+if [ -f "${PIDFILE}" ]; then
+  if [ -e "/proc/`cat ${PIDFILE}`" ]; then
+    log "Listener is already running! Closing."
+    exit 0
+  else
+    log "Listener was running and closed!"
+    for NAME in mosquitto_sub; do
+      killall ${NAME} 2>/dev/null
+    done
+  fi
+fi
+echo "$$" > ${PIDFILE}
 
 source ./mqtt_functions.sh
 log "Starting MQTT listener"
@@ -64,3 +79,5 @@ mosquitto_sub -v -R --will-topic ${TOPIC} --will-payload offline --will-retain $
     ;;
   esac
 done
+
+log "MQTT listener stopped"

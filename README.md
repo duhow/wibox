@@ -26,6 +26,10 @@ sudo cramfsck -x /tmp/cram mtd4-file
 sudo mkcramfs -e 0 -v -L /tmp/cram/ /tmp/cramfs.file
 ```
 
+You can also use `sudo make all` to run all the steps to prepare your custom image.
+
+Check [INSTALL](./INSTALL.md) document for more information.
+
 # Related
 
 Some content is provided from the following sources:

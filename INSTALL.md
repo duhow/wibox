@@ -14,7 +14,7 @@ Ensure to **NOT** be using `hardware flow control` in your program, as it blocks
 Connectors are smaller than usual (Dupont cable metal contact won't fit),
 so you will need to soldier with a copper wire, or just get the copper connector from the Dupont cable.
 
-![./docs/img/serial.jpg]
+![](./docs/img/serial.jpg)
 
 |Board|TTL|
 |-----|---|

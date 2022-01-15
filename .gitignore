@@ -3,3 +3,4 @@ cramfs/
 release/
 other/
 patch.log
+include/bin/ipctool

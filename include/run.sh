@@ -10,6 +10,7 @@ ifconfig eth0 192.168.1.10
 telnetd &
 
 mkdir -p /var/lock /var/run /var/fat32_0 /var/cloud
+cp -f /usr/cloud/states /var/cloud/states
 
 for FILE in hal hw_crypto media audio sensor i2s; do
   insmod /ko/${FILE}.ko
@@ -20,6 +21,7 @@ for FILE in wifi_pow rtl8188fu bit1628a rtc8563; do
 done
 
 sleep 1
+mdev -s
 
 # update hostname, read config line 4 straight to the UDID
 UDID=$(dd if=/dev/mtdblock6 skip=324 count=12 bs=1 2>/dev/null)

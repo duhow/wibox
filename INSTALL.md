@@ -80,21 +80,28 @@ nc ${YOUR_COMPUTER_IP} 8888 > /tmp/update.img
 :warning: This step is not fully safe and may require having access to serial to reflash.
 
 Use `update_firmware.sh` script to flash the new firmware placed in `/tmp/update.img`.
-This only flashes the `/usr` content folder.
+This only flashes the `/usr` content folder (`mtd4` partition), so Linux Kernel
+will still boot.
 
 After flashing, `reboot` the Wibox device to run the new content.
 
-## Flashing / Recovery via serial
+## Recovery via Shell
 
 In case the Wibox device does not connect to Wifi back,
-chances are that the `/usr` partition is not properly flashed and the `run.sh` script is not launching.
+chances are that the `/usr` partition is not properly flashed,
+and the `run.sh` script is not launching.
 
-The device will launch a `root` terminal via serial port, so you can continue to manage it.
+The device should launch a `root` terminal via serial port,
+so you can continue to manage it.
 
-Recommended to use a laptop and/or having a USB extender for USB/TTL to the Wibox device.
+Recommended to use a laptop and/or having a USB extender
+for USB/TTL to the Wibox device.
 
-Use `minicom` to connect to the TTL device and send the file via serial port using `XMODEM` protocol.
-Ensure to setup it first `sudo minicom -s`, configure default serial device and **disable hardware flow control**.
+Use `minicom` to connect to the TTL device and send the file
+via serial port using `XMODEM` protocol.
+
+Ensure to setup it first `sudo minicom -s`,
+configure default serial device and **disable hardware flow control**.
 
 Once you're connected to the Wibox device via serial:
 
@@ -103,5 +110,39 @@ cd /tmp
 rx /tmp/update.img
 ```
 
-Then press `[Ctrl]+[a]`, `[z]` and `[s] Send file`. Send your firmware image and reflash again.
+Then press `[Ctrl]+[a]`, `[z]` and `[s] Send file`.
+Send your firmware image and reflash again.
 It takes about 20 minutes to send the file.
+
+## Recovery via U-boot
+
+If somehow you're unable to access shell console but U-boot works,
+you can also attempt to reflash from there.
+
+:warning: Be sure to read and understand everything you're about to do,
+before running any command!
+
+```shell
+# Write FF to RAM at address C1000000 (kernel), B10000 times (11MB)
+mw.b 0xC1000000 ff 00b10000
+
+# Initialize Flash system
+sf probe
+
+# Get content from serial `YMODEM` to RAM. This will take about 15 minutes.
+loady 0xC1000000
+
+# As specified in docs/system.md, (/usr) mtd4 size is 11MB.
+# Offset / starting address is the sum of the size of previous partitions.
+# mtd0 + mtd1 + mtd2 + mtd3 = 0x460000
+# 256  + 64   + 1920 + 2240 = 4480KB
+
+# Erase Flash content - empty mtd4
+sf erase 0x00460000 00b10000
+
+# Write content from RAM to Flash
+sf write 0xC1000000 0x00460000 00b10000
+
+# Reboot device
+reset
+```

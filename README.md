@@ -4,7 +4,7 @@ This repository contains hardware and software information from [Fermax Wi-Box] 
 and contains custom scripts and files to patch and use the device locally,
 instead of using Chinese cloud.
 
-[Fermax Wi-Box]: https://www.fermax.com/spain/pro/productos/videoporteros/monitores/SF-91-monitor-veo/PR-13598-desvio-de-llamada-wifi-vds-wibox.html
+[Fermax Wi-Box]: https://www.fermax.com/spain/single-products/f03266-desvio-de-llamada-wifi-vds-wi-box
 
 - [x] Disable Sofia (original program) at boot, can be re-enabled
 - [x] Allow to modify root password

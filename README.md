@@ -6,8 +6,14 @@ instead of using Chinese cloud.
 
 [Fermax Wi-Box]: https://www.fermax.com/spain/pro/productos/videoporteros/monitores/SF-91-monitor-veo/PR-13598-desvio-de-llamada-wifi-vds-wibox.html
 
-Full functionality is not available, at the moment it can open the door remotely,
-and alert when someone rings at the door. (TODO)
+- [x] Disable Sofia (original program) at boot, can be re-enabled
+- [x] Allow to modify root password
+- [x] Open door remotely via HTTP and MQTT
+- [x] Integrate with Home Assistant (MQTT)
+- [ ] Use intercom audio
+- [ ] Build toolset to compile other software
+- [ ] Use dropbear SSH
+- Can alert and auto open when somebody rings, but there's some bug that avoids it.
 
 This has been tested with firmware `V500.R001.A103.00.G0021.B007`.
 

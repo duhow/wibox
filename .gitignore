@@ -2,5 +2,17 @@ mtd4
 cramfs/
 release/
 other/
+/tmp
 patch.log
+
+*.pcap
+*.img
+
+arm-goke-linux-uclibcgnueabi
+
+.config
+/defconfig*
+
+include/bin/mosquitto_*
+include/bin/strace
 include/bin/ipctool

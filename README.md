@@ -11,7 +11,7 @@ instead of using Chinese cloud.
 - [x] Open door remotely via HTTP and MQTT
 - [x] Integrate with Home Assistant (MQTT)
 - [ ] Use intercom audio
-- [ ] Build toolset to compile other software
+- [x] Build toolset to compile other software
 - [ ] Use dropbear SSH
 - Can alert and auto open when somebody rings, but there's some bug that avoids it.
 

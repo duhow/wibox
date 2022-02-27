@@ -3,6 +3,8 @@ FROM ubuntu:18.04
 ARG CROSSTOOL_VERSION=1.24.0 \
     CROSS_BUILD=arm-goke-linux-uclibcgnueabi
 
+COPY src /ct-ng-${CROSS_BUILD}/src/
+
 RUN apt update && \
     apt install -y sudo tar xz-utils unzip bzip2 build-essential bison \
       flex texinfo help2man file gawk libtool libtool-bin libncurses-dev wget curl && \
@@ -15,11 +17,11 @@ RUN apt update && \
     cd /ct-ng-${CROSS_BUILD} && \
     ct-ng arm-unknown-linux-uclibcgnueabi && \
     useradd build && \
-    usermod -d $PWD build && \
-    sudo chmod a+rw .
+    usermod -aG sudo -d $PWD build && \
+    chown -R build:build /ct-ng-${CROSS_BUILD} && \
+    chmod a+rw /ct-ng-${CROSS_BUILD}
 
 COPY .config /ct-ng-${CROSS_BUILD}/
-COPY src /ct-ng-${CROSS_BUILD}/src/
 
 WORKDIR /ct-ng-${CROSS_BUILD}
 USER build

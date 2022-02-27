@@ -31,6 +31,8 @@ RUN ct-ng build
 
 FROM ubuntu:18.04
 
+ARG CROSS_BUILD=arm-goke-linux-uclibcgnueabi
+
 RUN apt update && \
     apt install -y sudo tar xz-utils unzip bzip2 build-essential bison \
       flex texinfo help2man file gawk libtool libtool-bin libncurses-dev wget curl

@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:18.04 AS build
 
 ARG CROSSTOOL_VERSION=1.24.0 \
     CROSS_BUILD=arm-goke-linux-uclibcgnueabi
@@ -26,3 +26,16 @@ COPY .config /ct-ng-${CROSS_BUILD}/
 WORKDIR /ct-ng-${CROSS_BUILD}
 USER build
 RUN ct-ng build
+
+# ------
+
+FROM ubuntu:18.04
+
+RUN apt update && \
+    apt install -y sudo tar xz-utils unzip bzip2 build-essential bison \
+      flex texinfo help2man file gawk libtool libtool-bin libncurses-dev wget curl
+
+COPY --from=build /ct-ng-${CROSS_BUILD}/x-tools/${CROSS_BUILD} /${CROSS_BUILD}/
+
+ENV CROSS_COMPILE=${CROSS_BUILD}-
+ENV PATH=/${CROSS_BUILD}/bin:${PATH}

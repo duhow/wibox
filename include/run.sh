@@ -9,6 +9,15 @@ ifconfig eth0 192.168.1.10
 
 telnetd &
 
+if command -v dropbear >/dev/null; then
+  dropbear -R
+
+  if [ "$?" = 0 ]; then
+    echo "dropbear enabled"
+    # killall telnetd
+  fi
+fi
+
 mkdir -p /var/lock /var/run /var/fat32_0 /var/cloud
 cp -f /usr/cloud/states /var/cloud/states
 

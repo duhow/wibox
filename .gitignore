@@ -16,3 +16,7 @@ arm-goke-linux-uclibcgnueabi
 include/bin/mosquitto_*
 include/bin/strace
 include/bin/ipctool
+include/bin/scp
+include/bin/dbclient
+include/bin/dropbear*
+include/sbin/dropbear*

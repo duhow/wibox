@@ -12,7 +12,7 @@ instead of using Chinese cloud.
 - [x] Integrate with Home Assistant (MQTT)
 - [ ] Use intercom audio
 - [x] Build toolset to compile other software
-- [ ] Use dropbear SSH
+- [x] Use dropbear SSH
 - Can alert and auto open when somebody rings, but there's some bug that avoids it.
 
 This has been tested with firmware `V500.R001.A103.00.G0021.B007`.

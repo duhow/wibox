@@ -69,11 +69,11 @@ for BTN in 1 2; do
   done
 done
 
-MTOPIC=`setup_topic switch door`
+MTOPIC=`setup_topic button door`
 MDATA=`setup_switch_message door/set "Door Relay" door door`
 mqtt_send
 
-MTOPIC=`setup_topic switch f1`
+MTOPIC=`setup_topic button f1`
 MDATA=`setup_switch_message f1 "F1 Button" keyboard-f1 true`
 mqtt_send
 

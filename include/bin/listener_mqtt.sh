@@ -38,7 +38,7 @@ mosquitto_sub -v -R --will-topic ${TOPIC} --will-payload offline --will-retain $
   val=$(echo "$line" | awk '{print $2}' | tr '[:lower:]' '[:upper:]')
   case $line in
     "${TOPIC}/door/set"*)
-      if [ "$val" = "ON" ]; then
+      if [ "$val" = "ON" ] || [ "$val" = "PRESS" ]; then
         log "MQTT Open door"
         get_code TRANSFER_CMD_UNLOCK_DOOR > ${INTERCOM_DEVICE}
         (sleep 1 && mosquitto_pub ${MQTT_OPTS} -t "${TOPIC}/door/set" -m OFF) &
@@ -57,6 +57,10 @@ mosquitto_sub -v -R --will-topic ${TOPIC} --will-payload offline --will-retain $
       if [ "$val" = "ON" ]; then
         get_code START_F1 > ${INTERCOM_DEVICE}
       elif [ "$val" = "OFF" ]; then
+        get_code STOP_F1 > ${INTERCOM_DEVICE}
+      elif [ "$val" = "PRESS" ]; then
+        get_code START_F1 > ${INTERCOM_DEVICE}
+        sleep 3
         get_code STOP_F1 > ${INTERCOM_DEVICE}
       fi
     ;;

@@ -27,6 +27,7 @@ Given code `FB 20 00`, CRC last value = `B + 20 + 00` = `0x2B`.
 | `FB 16 01 22` | in | MCU_STATE 0x01 | After clicking button P2 (reset). LED blinks to red. |
 | `FB 17 00 22` | out | F1FuncOff | Turn off relay F1 button. |
 | `FB 17 01 23` | out | CallF1Func | Turn on relay F1 button. |
+| `FB 18 04 27` | in | SAVE_ADDR 0x04 | Appears after configuring with button P2 and pressing the intercom button. |
 | `FB 18 5E 81` | in | SAVE_ADDR 0x5e | Unknown. Appears after init. |
 | `FB 19 00 24` | in/out | PUSH_STATE 0x00 | Wifi/calls are disabled. Can be set. |
 | `FB 19 01 25` | in/out | PUSH_STATE 0x01 | Wifi/calls are enabled. Can be set. |

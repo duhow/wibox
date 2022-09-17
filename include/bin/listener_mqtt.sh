@@ -65,9 +65,9 @@ mosquitto_sub -v -R --will-topic ${TOPIC} --will-payload offline --will-retain $
       fi
     ;;
     "${TOPIC} "*)
-      if [ "$val" = "ONLINE" ]; then
+      if [ "$val" = "CONFIG" ]; then
         log "Connected successfully, configuring Home Assistant MQTT device"
-        ./mqtt_config_homeassistant.sh
+        ./mqtt_config_homeassistant.sh && mosquitto_pub ${MQTT_OPTS} -t "${TOPIC}" -m online
         if ! grep -q "mqtt_wifi_stats.sh" ${CRONFILE}; then
           log "Configuring wifi stats reporter and restarting cron"
           echo "*/${WIFISTATS_CRON_MIN} * * * * /usr/bin/mqtt_wifi_stats.sh" >> ${CRONFILE}

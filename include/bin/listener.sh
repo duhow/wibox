@@ -5,6 +5,7 @@ INPUT_FILE=/tmp/input_cmd
 ALARM_FILE=/mnt/mtd/alarm.log
 CODES_FILE=/usr/wibox_codes.txt
 PIDFILE=/tmp/listener.pid
+PIDFILE_MQTT=/tmp/listener_mqtt.pid
 MQTT_ENABLED=""
 CALL_OPEN_DOOR=""
 
@@ -48,7 +49,7 @@ if [ "$?" = 0 ]; then
     MQTT_ENABLED=1
     log "MQTT enabled"
     ./listener_mqtt.sh &
-    (sleep 6 && pgrep mosquitto_sub >/dev/null && mosquitto_pub ${MQTT_OPTS} -t "`mqtt_base_topic`" -m online) &
+    (sleep 6 && pgrep mosquitto_sub >/dev/null && mosquitto_pub ${MQTT_OPTS} -t "`mqtt_base_topic`" -m config) &
   else
     log "MQTT error $? - skipping"
   fi
@@ -69,6 +70,9 @@ while true; do
   elif is_code START_CALL; then
     log "Intercom opened"
     if [ -n "${MQTT_ENABLED}" ]; then
+      if [ -f "${PIDFILE_MQTT}" ] && [ -e "/proc/`cat ${PIDFILE_MQTT}`" ]; then
+        mosquitto_pub ${MQTT_OPTS} -t "`mqtt_base_topic`" -m online
+      fi
       mosquitto_pub ${MQTT_OPTS} -t "`mqtt_base_topic`/door" -m online
     fi
     if [ -n "${CALL_OPEN_DOOR}" ]; then

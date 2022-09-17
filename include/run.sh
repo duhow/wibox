@@ -67,6 +67,7 @@ mkdir -p ${CRONTABS}
 cat << EOF >> ${CRONTABS}/root
 15 3 * * 6 reboot
 */10 * * * * /usr/bin/healthcheck.sh
+* * * * * dmesg -c | grep -v RTL871X >> /var/messages
 EOF
 crond -b
 

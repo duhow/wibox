@@ -5,6 +5,7 @@ PIDFILE=/tmp/listener_mqtt.pid
 CODES_FILE=/usr/wibox_codes.txt
 CRONFILE=/var/spool/cron/crontabs/root
 WIFISTATS_CRON_MIN=2
+STATUS_ONLINE=""
 
 log(){ echo "$*" | tee /dev/kmsg; }
 get_code(){ echo -e $(grep "^$1 " ${CODES_FILE} | cut -d' ' -f2-); }
@@ -34,7 +35,7 @@ log "Starting MQTT listener"
 
 TOPIC=`mqtt_base_topic`
 
-mosquitto_sub -v -R --will-topic ${TOPIC} --will-payload offline --will-retain ${MQTT_OPTS} -t "${TOPIC}" -t "${TOPIC}/#" | while read -r line; do
+mosquitto_sub -v -k 300 --will-topic ${TOPIC} --will-payload offline --will-retain ${MQTT_OPTS} -t "${TOPIC}" -t "${TOPIC}/#" | while read -r line; do
   val=$(echo "$line" | awk '{print $2}' | tr '[:lower:]' '[:upper:]')
   case $line in
     "${TOPIC}/door/set"*)
@@ -66,6 +67,7 @@ mosquitto_sub -v -R --will-topic ${TOPIC} --will-payload offline --will-retain $
     ;;
     "${TOPIC} "*)
       if [ "$val" = "CONFIG" ]; then
+        STATUS_ONLINE=1
         log "Connected successfully, configuring Home Assistant MQTT device"
         ./mqtt_config_homeassistant.sh && mosquitto_pub ${MQTT_OPTS} -t "${TOPIC}" -m online
         if ! grep -q "mqtt_wifi_stats.sh" ${CRONFILE}; then
@@ -75,7 +77,7 @@ mosquitto_sub -v -R --will-topic ${TOPIC} --will-payload offline --will-retain $
           crond -b
         fi
 
-      elif [ "$val" = "OFFLINE" ]; then
+      elif [ "$val" = "OFFLINE" ] && [ -n "${STATUS_ONLINE}" ]; then
         log "Disconnected from MQTT. Rebooting in 60 seconds."
         sleep 60
         reboot

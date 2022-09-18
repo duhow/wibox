@@ -49,13 +49,26 @@ mosquitto_sub -v -k 300 --will-topic ${TOPIC} --will-payload offline --will-reta
     "${TOPIC}/door"*)
       log "MQTT Door $val"
       if [ "$val" = "ON" ] || [ "$val" = "ONLINE" ]; then
-        if [ "$((`date +%s` - ${LAST_OPEN}))" -ge 5 ] && [ ! -f "/tmp/intercom_opened" ]; then
+        if [ "$((`date +%s` - ${LAST_OPEN}))" -ge 3 ] && [ ! -f "/tmp/intercom_opened" ]; then
           get_code START_CALL > ${INTERCOM_DEVICE}
           LAST_OPEN=`date +%s`
         fi
       elif [ "$val" = "OFF" ] || [ "$val" = "OFFLINE" ]; then
         get_code STOP_CALL > ${INTERCOM_DEVICE}
         [ -f "/tmp/intercom_opened" ] && rm -f /tmp/intercom_opened
+      fi
+    ;;
+    "${TOPIC}/forward"*)
+      if [ "$((`date +%s` - ${LAST_OPEN}))" -ge 2 ]; then
+        log "MQTT Forward status $val"
+        if [ "$val" = "ON" ] || [ "$val" = "ONLINE" ]; then
+          get_code PUSH_STATE_1 > ${INTERCOM_DEVICE}
+        elif [ "$val" = "OFF" ] || [ "$val" = "OFFLINE" ]; then
+          get_code PUSH_STATE_0 > ${INTERCOM_DEVICE}
+        fi
+        LAST_OPEN=`date +%s`
+      else
+        log "MQTT Forward status $val - skipping"
       fi
     ;;
     "${TOPIC}/f1"*)

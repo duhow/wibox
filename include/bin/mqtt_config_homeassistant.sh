@@ -81,6 +81,10 @@ MTOPIC=`setup_topic switch opener`
 MDATA=`setup_switch_opener_message opener "Open Caller" phone`
 mqtt_send
 
+MTOPIC=`setup_topic switch forward`
+MDATA=`setup_switch_message forward "Forward Status" phone-forward true`
+mqtt_send
+
 MTOPIC=`setup_topic binary_sensor ding`
 MDATA=`setup_binary_sensor_message ding "Ding" occupancy 30`
 mqtt_send

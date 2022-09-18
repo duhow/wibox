@@ -115,6 +115,14 @@ while true; do
     log "Phone was picked up, stop alarm"
     [ -n "${MQTT_ENABLED}" ] && mqtt_ding OFF
     report_alarm 3
+  elif is_code PUSH_STATE_0; then
+    if [ -n "${MQTT_ENABLED}" ]; then
+      mosquitto_pub -r ${MQTT_OPTS} -t "`mqtt_base_topic`/forward" -m OFF
+    fi
+  elif is_code PUSH_STATE_1; then
+    if [ -n "${MQTT_ENABLED}" ]; then
+      mosquitto_pub -r ${MQTT_OPTS} -t "`mqtt_base_topic`/forward" -m ON
+    fi
   fi
 
   mv ${INPUT_FILE} ${INPUT_FILE}.prev

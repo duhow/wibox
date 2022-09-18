@@ -106,7 +106,10 @@ while true; do
     fi
   elif is_code HANG_UP_0; then
     log "Call missed"
-    [ -n "${MQTT_ENABLED}" ] && mqtt_ding OFF
+    if [ -n "${MQTT_ENABLED}" ]; then
+      mqtt_ding OFF
+      mosquitto_pub ${MQTT_OPTS} -t "`mqtt_base_topic`/door" -m offline
+    fi
     report_alarm 2
   elif is_code CMD_STOP_RING; then
     log "Phone was picked up, stop alarm"

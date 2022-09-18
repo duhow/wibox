@@ -6,6 +6,7 @@ CODES_FILE=/usr/wibox_codes.txt
 CRONFILE=/var/spool/cron/crontabs/root
 WIFISTATS_CRON_MIN=2
 STATUS_ONLINE=""
+LAST_OPEN=0
 
 log(){ echo "$*" | tee /dev/kmsg; }
 get_code(){ echo -e $(grep "^$1 " ${CODES_FILE} | cut -d' ' -f2-); }
@@ -48,9 +49,13 @@ mosquitto_sub -v -k 300 --will-topic ${TOPIC} --will-payload offline --will-reta
     "${TOPIC}/door"*)
       log "MQTT Door $val"
       if [ "$val" = "ON" ] || [ "$val" = "ONLINE" ]; then
-        get_code START_CALL > ${INTERCOM_DEVICE}
+        if [ "$((`date +%s` - ${LAST_OPEN}))" -ge 5 ] && [ ! -f "/tmp/intercom_opened" ]; then
+          get_code START_CALL > ${INTERCOM_DEVICE}
+          LAST_OPEN=`date +%s`
+        fi
       elif [ "$val" = "OFF" ] || [ "$val" = "OFFLINE" ]; then
         get_code STOP_CALL > ${INTERCOM_DEVICE}
+        [ -f "/tmp/intercom_opened" ] && rm -f /tmp/intercom_opened
       fi
     ;;
     "${TOPIC}/f1"*)

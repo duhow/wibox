@@ -72,6 +72,7 @@ while true; do
     if [ -n "${MQTT_ENABLED}" ]; then
       if [ -f "${PIDFILE_MQTT}" ] && [ -e "/proc/`cat ${PIDFILE_MQTT}`" ]; then
         mosquitto_pub ${MQTT_OPTS} -t "`mqtt_base_topic`" -m online
+        touch /tmp/intercom_opened
       fi
       mosquitto_pub ${MQTT_OPTS} -t "`mqtt_base_topic`/door" -m online
     fi

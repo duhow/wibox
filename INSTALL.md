@@ -85,6 +85,15 @@ will still boot.
 
 After flashing, `reboot` the Wibox device to run the new content.
 
+ℹ️ If you want to flash **manually**, the commands are:
+
+```sh
+dd if=/tmp/update.img of=/dev/mtdblock4 bs=4096
+# IMPORTANT! ensure changes are written to flash
+sync
+fsync /dev/mtdblock4
+```
+
 ## Recovery via Shell
 
 In case the Wibox device does not connect to Wifi back,

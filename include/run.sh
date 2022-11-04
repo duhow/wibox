@@ -2,6 +2,7 @@
 
 [ -f "/mnt/mtd/passwd" ] && mount --bind /mnt/mtd/passwd /etc/passwd
 [ -f "/mnt/mtd/factory" ] && ( /usr/run-orig.sh; exit )
+[ -f "/mnt/mtd/TZ" ] && export TZ=$(cat /mnt/mtd/TZ)
 
 echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 ifconfig eth0 up

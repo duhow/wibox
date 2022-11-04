@@ -84,7 +84,7 @@ CRONTABS="/var/spool/cron/crontabs"
 mkdir -p ${CRONTABS}
 cat << EOF >> ${CRONTABS}/root
 15 3 * * 6 reboot
-*/10 * * * * /usr/bin/healthcheck.sh
+*/10 * * * * /usr/bin/heartbeat.sh
 0 * * * * ntpd -q -p pool.ntp.org
 * * * * * dmesg -c | grep -v RTL871X >> /var/messages
 EOF

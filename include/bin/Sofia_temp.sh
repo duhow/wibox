@@ -13,8 +13,16 @@ cp -f /usr/cloud/states /var/cloud/states
 
 echo 3 > /proc/sys/vm/drop_caches
 
+if [ -f "/etc/TZ" ]; then
+  mv /etc/TZ /etc/TZ.tmp
+fi
+
 timeout -t 35 /usr/bin/system_sofia &
 timeout -t 30 /var/Sofia
 rmmod goke_wdt
 rm -f /var/Sofia
 killall ntsclientcon_goke_static
+
+if [ -f "/etc/TZ.tmp" ]; then
+  mv /etc/TZ.tmp /etc/TZ
+fi

@@ -91,6 +91,7 @@ mosquitto_sub -v -k 300 --will-topic ${TOPIC} --will-payload offline --will-reta
         if ! grep -q "mqtt_wifi_stats.sh" ${CRONFILE}; then
           log "Configuring wifi stats reporter and restarting cron"
           echo "*/${WIFISTATS_CRON_MIN} * * * * /usr/bin/mqtt_wifi_stats.sh" >> ${CRONFILE}
+          echo "*/10 * * * * /usr/bin/heartbeat_mqtt.sh" >> ${CRONFILE}
           killall crond
           crond -b
         fi

@@ -10,12 +10,22 @@ ifconfig eth0 192.168.1.10
 
 telnetd &
 
+# copy etc as writable
+cp -Rdpf /etc /var/etc
+mount --bind /var/etc /etc
+
+for P in /usr /mnt/mtd ; do
+if [ -e "${P}/etc" ]; then
+  cp -Rdpf ${P}/etc/* /etc
+fi
+done
+
 if command -v dropbear >/dev/null; then
   dropbear -R
 
   if [ "$?" = 0 ]; then
     echo "dropbear enabled"
-    # killall telnetd
+    killall telnetd
   fi
 fi
 
@@ -68,8 +78,12 @@ mkdir -p ${CRONTABS}
 cat << EOF >> ${CRONTABS}/root
 15 3 * * 6 reboot
 */10 * * * * /usr/bin/healthcheck.sh
+0 * * * * ntpd -q -p pool.ntp.org
 * * * * * dmesg -c | grep -v RTL871X >> /var/messages
 EOF
+if [ -f "/mnt/mtd/crontab" ]; then
+  cat /mnt/mtd/crontab >> ${CRONTABS}/root
+fi
 crond -b
 
 /usr/bin/listener.sh &

@@ -11,6 +11,14 @@ It is **highly recommended** to have serial access prepared, as it's your way to
 You can connect to the board via serial port enabled on `ttySGK2`, at baud rate `115200`.
 Ensure to **NOT** be using `hardware flow control` in your program, as it blocks input.  
 
+If you don't see any content after booting, enter U-boot settings and run the following:
+
+```
+setenv consoledev 'ttySGK0'
+saveenv
+reset
+```
+
 Connectors are smaller than usual (Dupont cable metal contact won't fit),
 so you will need to soldier with a copper wire, or just get the copper connector from the Dupont cable.
 
@@ -26,10 +34,10 @@ so you will need to soldier with a copper wire, or just get the copper connector
 
 - Get access to the Wibox system terminal.  
 
-If your system version is `V500.R001.A103.00.G0021.B007`, you may have access to `telnet` service.
-This was not tested with newer versions, so please post any updates or discovery you may find.
+If your system version is `V500.R001.A103.00.G0021.B007`, you may have access to `telnet` service.  
+:warning: New versions such as `V500.R001.A103.00.G021.B013` have this disabled, so you'll need to get **serial access**.
 
-Login with user `root` and password `qv2008`.
+Login to system with user `root` and password `qv2008`.
 Don't worry, with this patch you will be able to change the default password. :)
 
 ```
@@ -37,6 +45,8 @@ IDS79380000 login: root
 Password:
 #
 ```
+
+**NOTE:** If console login is from Sofia application, credentials are `root` and `aszeno`.
 
 - Download and build [cramfs-tools](https://github.com/npitre/cramfs-tools).
 

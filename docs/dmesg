@@ -1,3 +1,31 @@
+DRAM:  64 MiB
+Flash: [XM25QH128A] USE 4X mode read and 4X mode write
+16 MiB
+NAND:  [No SPI nand]
+SF:    16 MiB [page:256 Bytes] [sector:64 KiB] [count:256] (XM25QH128A)
+In:    serial
+Out:   serial
+Err:   serial
+Net:   Int PHY
+Hit Enter key to stop autoboot:  0
+[PROCESS_SEPARATORS] run normalboot
+[PROCESS_SEPARATORS] setenv bootargs console=$(consoledev),115200 mem=52M init=/linuxrc root=/dev/mtdblock3 rootfstype=squashfs mtdparts=gk_flash:256K(uboot),64K(env),1920K(kernel),2240K(ro0
+SF:    16 MiB [page:256 Bytes] [sector:64 KiB] [count:256] (XM25QH128A)
+put param to memory
+mem size (52)
+total mem size (64)
+bsb size (1)
+usr size (0)
+
+the kernel image is zImage or Image
+entry = 0xc1000000
+## Transferring control to Linux (at address c1000000)...
+
+Starting kernel ...
+
+machid = 3988 r2 = 0xc0000100
+Uncompressing Linux... done, booting the kernel.
+
 [    0.000000] Booting Linux on physical CPU 0
 [    0.000000] Linux version 3.4.43-gk (hecong@tdk) (gcc version 4.6.1 (crosstool-NG 1.18.0) ) #18 PREEMPT Mon May 21 16:54:23 CST 2018
 [    0.000000] CPU: ARMv6-compatible processor [410fb767] revision 7 (ARMv7), cr=00c5387d
@@ -10,14 +38,14 @@
 [    0.000000] BSB: 0xc3600000  0xf5000000  -- 0x100000
 [    0.000000] DSP: 0xc3700000  0xf6000000  -- 0x8f0000
 [    0.000000] USR: 0xc3ff0000  0xfe000000  -- 0x10000
-[    0.000000] hal version = 20160804 
+[    0.000000] hal version = 20160804
 [    0.000000] On node 0 totalpages: 13312
 [    0.000000] free_area_init_node: node 0, pgdat 804eedfc, node_mem_map 80533000
 [    0.000000]   Normal zone: 104 pages used for memmap
 [    0.000000]   Normal zone: 0 pages reserved
 [    0.000000]   Normal zone: 13208 pages, LIFO batch:3
 [    0.000000] pcpu-alloc: s0 r0 d32768 u32768 alloc=1*32768
-[    0.000000] pcpu-alloc: [0] 0 
+[    0.000000] pcpu-alloc: [0] 0
 [    0.000000] Built 1 zonelists in Zone order, mobility grouping on.  Total pages: 13208
 [    0.000000] Kernel command line: console=ttySGK2,115200 mem=52M init=/linuxrc root=/dev/mtdblock3 rootfstype=squashfs mtdparts=gk_flash:256K(uboot),64K(env),1920K(kernel),2240K(rootfs),11328K(usr),512K(mnt),64K(cfg)
 [    0.000000] PID hash table entries: 256 (order: -2, 1024 bytes)
@@ -54,8 +82,8 @@
 [    0.110000] Init HW timer for DSP communication
 [    0.110000] init gpio...
 [    0.120000] ###################################
-[    0.120000] [BOOT VERSION] GK7102S tdks_v1.0 v1.0 
-[    0.130000] [NET  INT_CLK] Internal PHY clock 
+[    0.120000] [BOOT VERSION] GK7102S tdks_v1.0 v1.0
+[    0.130000] [NET  INT_CLK] Internal PHY clock
 [    0.130000] [GPIO]#############################
 [    0.140000] [GPIO] gpio map get from uboot
 [    0.140000] [GPIO CFG] gpio   count = 63
@@ -126,17 +154,17 @@
 [    0.440000] gk register I2C
 [    0.450000] bio: create slab <bio-0> at 0
 [    0.460000] SCSI subsystem initialized
-[    0.460000] spi spi.0: gk SPI Controller 0 created 
+[    0.460000] spi spi.0: gk SPI Controller 0 created
 [    0.470000] spi spi.0: master is unqueued, this is deprecated
-[    0.480000] spi spi.1: gk SPI Controller 1 created 
+[    0.480000] spi spi.1: gk SPI Controller 1 created
 [    0.480000] spi spi.1: master is unqueued, this is deprecated
 [    0.490000] usbcore: registered new interface driver usbfs
 [    0.490000] usbcore: registered new interface driver hub
 [    0.500000] usbcore: registered new device driver usb
-[    0.510000] i2c regbase: 0xf3003000 
+[    0.510000] i2c regbase: 0xf3003000
 [    0.510000] i2c i2c.0: i2c irq:registers 9
 [    0.520000] i2c i2c.0: GK I2C[0] adapter[i2c-0] probed!
-[    0.520000] i2c regbase: 0xf3004000 
+[    0.520000] i2c regbase: 0xf3004000
 [    0.530000] i2c i2c.1: i2c irq:registers 58
 [    0.530000] i2c i2c.1: GK I2C[1] adapter[i2c-1] probed!
 [    0.540000] FS-Cache: Loaded
@@ -158,7 +186,7 @@
 [    0.670000] RPC: Registered tcp transport module.
 [    0.670000] RPC: Registered tcp NFSv4.1 backchannel transport module.
 [    0.690000] mdma init...
-[    0.690000] mdma request irq: 54 
+[    0.690000] mdma request irq: 54
 [    0.700000] squashfs: version 4.0 (2009/01/31) Phillip Lougher
 [    0.710000] exFAT: Version 1.2.9
 [    0.710000] NFS: Registering the id_resolver key type
@@ -201,7 +229,7 @@
 [    0.910000] slram: not enough parameters.
 [    0.910000] GKETH_init
 [    0.920000] [GKETH_drv_probe] eth_base = 0xf200e000
-[    0.920000] mii id = 0 
+[    0.920000] mii id = 0
 [    0.920000] mdiobus_register: PHY[0] whose id 0x00000000
 [    0.930000] goke MII Bus: probed
 [    0.940000] gk-eth gk-eth.0: MAC Address[02:11:22:a3:a0:00].
@@ -212,7 +240,7 @@
 [    1.270000] gk musb init end...
 [    1.270000] dma_controller_create_non_init ok
 [    1.280000] musb-hdrc: ConfigData=0x03 (UTMI-16, SoftConn)
-[    1.280000] musb-hdrc: MHDRC RTL version 2.0 
+[    1.280000] musb-hdrc: MHDRC RTL version 2.0
 [    1.280000] musb-hdrc musb-hdrc: MUSB HDRC host driver
 [    1.290000] musb-hdrc musb-hdrc: new USB bus registered, assigned bus number 1
 [    1.300000] hub 1-0:1.0: USB hub found
@@ -223,11 +251,11 @@
 [    1.320000] input: GKInput as /devices/virtual/input/input0
 [    1.330000] evbug: Connected device: input0 (GKInput at gk/input0)
 [    1.330000] Protocol NEC[0]
-[    1.330000] ir request irq: 62 
+[    1.330000] ir request irq: 62
 [    1.340000] IR Host Controller probed!
 [    1.340000] gk rtc init...
-[    1.340000] rtc base: 0xf2080000 
-[    1.350000] os read tm: t=0 
+[    1.340000] rtc base: 0xf2080000
+[    1.350000] os read tm: t=0
 [    1.350000] gk-rtc: dev (254:0)
 [    1.350000] gk-rtc gk-rtc: rtc core: registered gk-rtc as rtc0
 [    1.360000] i2c /dev entries driver
@@ -247,7 +275,7 @@
 [    1.420000] lib80211_crypt: registered algorithm 'TKIP'
 [    1.420000] Registering the dns_resolver key type
 [    1.430000] VFP support v0.3: implementor 41 architecture 1 part 20 variant b rev 5
-[    1.440000] os read tm: t=0 
+[    1.440000] os read tm: t=0
 [    1.440000] gk-rtc gk-rtc: setting system clock to 1970-01-01 00:00:00 UTC (0)
 [    1.460000] VFS: Mounted root (squashfs filesystem) readonly on device 31:3.
 [    1.460000] Freeing init memory: 144K
@@ -303,7 +331,7 @@ Media driver version (gcc version 4.6.1 (crosstool-NG 1.18.0) (uClibc)) tag #svn
 [   19.370000] RTL871X: module init start
 [   19.370000] RTL871X: rtl8188fu v4.3.23.6_20964.20170110
 [   19.370000] RTL871X: build time: Oct 23 2018 17:28:52
-[   19.370000] RTL871X: 
+[   19.370000] RTL871X:
 [   19.370000] usb_endpoint_descriptor(0):
 [   19.370000] RTL871X: bLength=7
 [   19.370000] RTL871X: bDescriptorType=5
@@ -331,7 +359,7 @@ Media driver version (gcc version 4.6.1 (crosstool-NG 1.18.0) (uClibc)) tag #svn
 [   19.370000] 
 [   19.370000] RTL871X: USB_SPEED_HIGH
 [   19.370000] RTL871X: CHIP TYPE: RTL8188FU
-[   19.400000] RTL871X: rtw_hal_config_rftype RF_Type is 3 TotalTxPath is 1 
+[   19.400000] RTL871X: rtw_hal_config_rftype RF_Type is 3 TotalTxPath is 1
 [   19.400000] RTL871X: Chip Version Info: CHIP_8188F_Normal_Chip_SMIC_B_CUT_1T1R_RomVer(0)
 [   19.400000] RTL871X: _ConfigChipOutEP_8188F OutEpQueueSel(0x05), OutEpNumber(2)
 [   19.400000] RTL871X: EEPROM type is E-FUSE
@@ -462,7 +490,7 @@ Media driver version (gcc version 4.6.1 (crosstool-NG 1.18.0) (uClibc)) tag #svn
 [   24.580000] RTL871X: usb_read_port_complete() RX Warning! bDriverStopped(False) OR bSurpriseRemoved(False)
 [   24.580000] dma abort ch=2,is_tx=0 dmasta=0x0 dmactr=0x38000000
 [   24.580000] RTL871X: usb_read_port_complete() RX Warning! bDriverStopped(False) OR bSurpriseRemoved(False)
-[   24.580000] RTL871X: usb_write_port_cancel 
+[   24.580000] RTL871X: usb_write_port_cancel
 [   24.580000] RTL871X: ==> rtl8188fu_hal_deinit
 [   24.580000] RTL871X: CardDisableRTL8188FU
 [   24.620000] RTL871X: <=== rtw_ips_pwr_down..................... in 60ms
@@ -519,7 +547,7 @@ Media driver version (gcc version 4.6.1 (crosstool-NG 1.18.0) (uClibc)) tag #svn
 [   28.250000] RTL871X: usb_read_port_complete() RX Warning! bDriverStopped(False) OR bSurpriseRemoved(False)
 [   28.250000] dma abort ch=2,is_tx=0 dmasta=0x0 dmactr=0x2a00012f
 [   28.250000] RTL871X: usb_read_port_complete() RX Warning! bDriverStopped(False) OR bSurpriseRemoved(False)
-[   28.250000] RTL871X: usb_write_port_cancel 
+[   28.250000] RTL871X: usb_write_port_cancel
 [   28.250000] RTL871X: ==> rtl8188fu_hal_deinit
 [   28.250000] RTL871X: CardDisableRTL8188FU
 [   28.280000] RTL871X: <=== rtw_ips_pwr_down..................... in 30ms
@@ -561,9 +589,9 @@ Media driver version (gcc version 4.6.1 (crosstool-NG 1.18.0) (uClibc)) tag #svn
 [   29.040000] RTL871X: rtw_cfg80211_set_auth_type, nl80211_auth_type=0
 [   29.040000] RTL871X: cfg80211_rtw_connect, ie_len=22
 [   29.040000] RTL871X: set wpa_ie(length:22):
-[   29.040000] RTL871X: 0x30 0x14 0x01 0x00 0x00 0x0f 0xac 0x04 
-[   29.040000] RTL871X: 0x01 0x00 0x00 0x0f 0xac 0x04 0x01 0x00 
-[   29.040000] RTL871X: 0x00 0x0f 0xac 0x02 0x00 0x00 0x5c 0xe3 
+[   29.040000] RTL871X: 0x30 0x14 0x01 0x00 0x00 0x0f 0xac 0x04
+[   29.040000] RTL871X: 0x01 0x00 0x00 0x0f 0xac 0x04 0x01 0x00
+[   29.040000] RTL871X: 0x00 0x0f 0xac 0x02 0x00 0x00 0x5c 0xe3
 [   29.040000] RTL871X: got wpa2_ie, wpa2_ielen:20
 [   29.040000] RTL871X: SetHwReg8188F, 6249, RCR= 700060ca
 [   29.040000] RTL871X: rtw_cfg80211_set_cipher, ucast=1, cipher=0xfac04
@@ -658,7 +686,7 @@ Media driver version (gcc version 4.6.1 (crosstool-NG 1.18.0) (uClibc)) tag #svn
 [   29.310000] RTL871X: key_index=0
 [   29.310000] RTL871X: pairwise=1
 [   29.310000] RTL871X: rtw_cfg80211_set_encryption
-[   29.310000] RTL871X: rtw_cfg80211_set_encryption, : param->u.crypt.set_tx ==1 
+[   29.310000] RTL871X: rtw_cfg80211_set_encryption, : param->u.crypt.set_tx ==1
 [   29.310000] RTL871X:  ~~~~set sta key:unicastkey
 [   29.310000] RTL871X: set pairwise key camid:4, addr:00:11:22:33:44:55, kid:0, type:AES
 [   29.310000] RTL871X: rtw_cfg80211_set_encryption, ret=0

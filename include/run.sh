@@ -50,11 +50,13 @@ rm -rf /var/run/wpa_supplicant
 mkdir -p /var/run/wpa_supplicant
 
 WPA_CONF="/var/wifi/wpa_supplicant.conf"
+# WARNING: If file does not exist in persistent partition,
+# Wibox cannot connect to Wireless AP! Ensure to create it.
 [ -f "/mnt/mtd/wpa_supplicant.conf" ] && WPA_CONF="/mnt/mtd/wpa_supplicant.conf"
 
 ln -s /mnt/mtd/Config/resolv.conf /var/resolv.conf
 wpa_supplicant -i wlan0 -c ${WPA_CONF} -B
-udhcpc -i wlan0 -s /var/wifi/udhcpc.conf
+timeout -t 150 udhcpc -i wlan0 -s /var/wifi/udhcpc.conf
 
 # increase network buffer
 echo 1084576 > /proc/sys/net/core/rmem_max

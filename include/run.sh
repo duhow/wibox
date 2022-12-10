@@ -11,6 +11,7 @@ ifconfig eth0 192.168.1.10
 telnetd &
 
 if command -v dropbear >/dev/null; then
+  mkdir -p /mnt/mtd/dropbear
   dropbear -R
 
   if [ "$?" = 0 ]; then

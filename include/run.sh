@@ -21,7 +21,7 @@ fi
 
 [ -f "/mnt/mtd/factory" ] && ( /usr/run-orig.sh; exit )
 
-for DIR in lock run fat32_0 cloud wifi log; do
+for DIR in lock run fat32_0 cloud wifi; do
   mkdir -p /var/$DIR
 done
 cp -f /usr/cloud/states /var/cloud/states

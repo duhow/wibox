@@ -36,9 +36,11 @@ Given code `FB 20 00`, CRC last value = `B + 20 + 00` = `0x2B`.
 | `FB 23 00 2E` | in | CMD_STOP_RING 0x00 | Pick the call from physical intercom phone. Additional params: ch = 1 |
 | `FB 24 01 30` | in | CMD_DOWN_LONG 0x01 | Received every 5 minutes. |
 | `FB 24 02 31` | in | CMD_DOWN_LONG 0x02 | Received every 5 minutes after previous one. |
+| `FB 26 00 31` | in | CMD_FAC_SSID_POSTFIX 0x00 | Unknown, received on booting new version B013. |
 
 Other unknown found:
 
 ```
 CMD_FACTORY_MODE 0x%02x
+AACB version 20190802 `FD 32 30 31 39 30 38 30 32 00`
 ```

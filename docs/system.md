@@ -1,3 +1,13 @@
+# Power Supply
+
+:zap: The board is powered by 18V DC. A "coil" may be in place or not. Usage is unknown.
+
+Depending on the activity (pressing a button) or wiring on the Telephone, voltage may drop to 12V or less,
+which may cause the board to shutdown, restart, or being unable to power on.
+
+To fix this, press the Unlock button in the Telephone, or pick/hang the phone,
+to trigger actions on the Outdoor Panel, and power should come back to normal.
+
 # Storage
 
 Board uses a 16MB flash memory with the following structure:
@@ -52,6 +62,7 @@ Default script process is as follows:
 - Extract compressed-LZMA `Sofia` program to Ram.
 - Start `system_sofia` in background, which seems to provide some `telnetd` shell on `TCP/6683`. 
 - Set system network `rmem_max` and `wmem_max` buffer to 1MB - buffer that receives UDP packets.
+- On newer versions, ARP ignore is enabled (except for same IP address), and ARP announce uses the best local address.
 - Start and wait `e2prom_mac`, which seems to set MAC address on `eth0` (PducInfo) and few other settings,
   based in config `/dev/mtdblock6` and Uboot envs `/dev/mtdblock1`.
   It also does something with `/dev/watchdog` and may cause reboot.
@@ -277,4 +288,16 @@ ip: 403351744, netmask: 16777215, gateway: 16885952
 GetVersion(120) version=V500.R001.A103.00.G0021.B007, 28
 19:58:22|trace CAutoSearch::ThreadProc():send ack msg 1861 , buf_len ==> 616
 ezio send to wlan0
+```
+
+## Events
+
+So far, no key is identified.
+
+```
+add device 1: /dev/input/event0
+  name:     "GKInput"
+  events:
+    KEY (0001): 0000  0001  0003  0009  000b  000c  000d  000f 
+                0011  0019  001b  001d 
 ```

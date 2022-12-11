@@ -4,6 +4,11 @@
 [ -f "/mnt/mtd/TZ" ] && export TZ=$(cat /mnt/mtd/TZ)
 
 echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+
+source /usr/bin/gpio.sh
+setup_all_gpio
+wifi_led red
+
 ifconfig eth0 up
 ifconfig eth0 192.168.1.10
 
@@ -67,9 +72,13 @@ WPA_CONF="/var/wifi/wpa_supplicant.conf"
 # Wibox cannot connect to Wireless AP! Ensure to create it.
 [ -f "/mnt/mtd/wpa_supplicant.conf" ] && WPA_CONF="/mnt/mtd/wpa_supplicant.conf"
 
+wifi_led off
+
 ln -s /mnt/mtd/Config/resolv.conf /var/resolv.conf
 wpa_supplicant -i wlan0 -c ${WPA_CONF} -B
 timeout -t 150 udhcpc -i wlan0 -s /var/wifi/udhcpc.conf
+
+[ "$?" = 0 ] && wifi_led green || wifi_led red
 
 # increase network buffer
 echo 1084576 > /proc/sys/net/core/rmem_max
@@ -103,9 +112,14 @@ if [ -z "${RUN_SOFIA}" ] || [ "${RUN_SOFIA}" != "0" ]; then
   timeout -t 180 /usr/bin/Sofia_temp.sh
 fi
 
+# update hostname after Sofia run
+echo "IDS7938${UDID:8:4}" > /proc/sys/kernel/hostname
+
 /usr/bin/listener.sh &
 
 [ -f "/mnt/mtd/post.sh" ] && /mnt/mtd/post.sh
 
 # remove lock if present
 rm -f /tmp/heartbeat.lock
+
+wifi_led blue

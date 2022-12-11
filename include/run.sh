@@ -21,7 +21,9 @@ fi
 
 [ -f "/mnt/mtd/factory" ] && ( /usr/run-orig.sh; exit )
 
-mkdir -p /var/lock /var/run /var/fat32_0 /var/cloud
+for DIR in lock run fat32_0 cloud wifi log; do
+  mkdir -p /var/$DIR
+done
 cp -f /usr/cloud/states /var/cloud/states
 
 for FILE in hal hw_crypto media audio sensor i2s; do
@@ -44,7 +46,6 @@ echo "IDS7938${UDID:8:4}" > /proc/sys/kernel/hostname
 cd /usr/web && ./setup.sh
 
 #wifi
-mkdir /var/wifi
 cp /usr/sbin/wifi_conf/* /var/wifi/
 cp /usr/sbin/hostapd.conf /var/wifi
 
@@ -63,6 +64,8 @@ timeout -t 150 udhcpc -i wlan0 -s /var/wifi/udhcpc.conf
 # increase network buffer
 echo 1084576 > /proc/sys/net/core/rmem_max
 echo 1084576 > /proc/sys/net/core/wmem_max
+echo 1 > /proc/sys/net/ipv4/conf/all/arp_ignore
+echo 2 > /proc/sys/net/ipv4/conf/all/arp_announce
 
 echo 3 > /proc/sys/vm/drop_caches; free
 
@@ -75,6 +78,13 @@ cat << EOF >> ${CRONTABS}/root
 * * * * * dmesg -c | grep -v RTL871X >> /var/messages
 EOF
 crond -b
+
+# get settings from uboot
+RUN_SOFIA=$(strings /dev/mtdblock1 | grep -E "^sofia=" | cut -d '=' -f2)
+
+if [ -z "${RUN_SOFIA}" ] || [ "${RUN_SOFIA}" != "0" ]; then
+  /usr/bin/Sofia_temp.sh
+fi
 
 /usr/bin/listener.sh &
 

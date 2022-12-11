@@ -17,6 +17,9 @@ if [ "$UPDATE_SIZE" -ge "$MAXSIZE" ]; then
   exit 1
 fi
 
+# stop heartbeat check while upgrading
+touch /tmp/heartbeat.lock
+
 COUNT="$(( ${UPDATE_SIZE} / ${BLOCK} ))"
 echo "[*] Checking current content - ${COUNT}"
 PRE_UPDATE_HASH=$(dd if=${DATAPART} bs=${BLOCK} count=${COUNT} | md5sum - | cut -d' ' -f1)

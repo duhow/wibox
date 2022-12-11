@@ -11,6 +11,11 @@ test_dns(){ nslookup $1; }
 clear_lock(){ rm -f ${LOCKFILE} 2>/dev/null; }
 get_gateway_ip(){ ip route | grep "default via" | grep "dev wlan0" | cut -d ' ' -f3; }
 
+if pgrep hostapd > /dev/null; then
+  echo "Running as AP, skipping."
+  exit 0
+fi
+
 # lock for 30 minutes
 if [ "`find ${LOCKFILE} -mmin -30` 2>/dev/null" = "${LOCKFILE}" ] ; then
   echo "Already running! Exiting."

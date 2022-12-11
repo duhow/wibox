@@ -79,6 +79,9 @@ echo 2 > /proc/sys/net/ipv4/conf/all/arp_announce
 
 echo 3 > /proc/sys/vm/drop_caches; free
 
+# stop heartbeat until full start
+touch /tmp/heartbeat.lock
+
 # cron
 CRONTABS="/var/spool/cron/crontabs"
 mkdir -p ${CRONTABS}
@@ -97,9 +100,12 @@ crond -b
 RUN_SOFIA=$(strings /dev/mtdblock1 | grep -E "^sofia=" | cut -d '=' -f2)
 
 if [ -z "${RUN_SOFIA}" ] || [ "${RUN_SOFIA}" != "0" ]; then
-  /usr/bin/Sofia_temp.sh
+  timeout -t 180 /usr/bin/Sofia_temp.sh
 fi
 
 /usr/bin/listener.sh &
 
 [ -f "/mnt/mtd/post.sh" ] && /mnt/mtd/post.sh
+
+# remove lock if present
+rm -f /tmp/heartbeat.lock

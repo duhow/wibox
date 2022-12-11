@@ -10,6 +10,7 @@ MQTT_HOST=127.0.0.1
 MQTT_USER=""
 MQTT_PASS=""
 MQTT_HOMEASSISTANT="homeassistant"
+MQTT_MUST_RUN=0
 MQTT_CONFIG_STORE="/mnt/mtd/mqtt.conf"
 MQTT_CONFIG_FILE="/tmp/mqtt.conf"
 

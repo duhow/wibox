@@ -40,6 +40,7 @@ log "Starting listener"
 
 # change workdir to script dir
 cd `dirname "$0"`
+source /usr/bin/gpio.sh
 
 which mosquitto_pub >/dev/null 2&>/dev/null
 if [ "$?" = 0 ]; then
@@ -51,7 +52,14 @@ if [ "$?" = 0 ]; then
     ./listener_mqtt.sh &
     (sleep 6 && pgrep mosquitto_sub >/dev/null && mosquitto_pub ${MQTT_OPTS} -t "`mqtt_base_topic`" -m config) &
   else
-    log "MQTT error $? - skipping"
+    if [ "${MQTT_MUST_RUN}" = "1" ]; then
+      log "MQTT exited with error $? and must run - will reboot"
+      wifi_led red
+      sleep 60
+      reboot
+    else
+      log "MQTT exited with error $? - skipping"
+    fi
   fi
 fi
 
@@ -63,6 +71,7 @@ while true; do
     log "Command is empty"
   elif is_code CMD_RESET; then
     log "Factory rebooting"
+    wifi_led red
     touch /mnt/mtd/factory
     sync
     killall mosquitto_sub

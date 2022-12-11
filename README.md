@@ -13,9 +13,10 @@ instead of using Chinese cloud.
 - [ ] Use intercom audio
 - [x] Build toolset to compile other software
 - [x] Use dropbear SSH
-- Can alert and auto open when somebody rings, but there's some bug that avoids it.
 
-This has been tested with firmware `V500.R001.A103.00.G0021.B007`.
+This has been tested with following firmware versions:
+- `V500.R001.A103.00.G0021.B007`
+- `V500.R001.A103.00.G0021.B013`
 
 # Requirements
 
@@ -25,16 +26,16 @@ This project uses [cramfs-tools] to extract and build the userdata image.
 
 # Install
 
-You can extract and build your image:
+Check [INSTALL](./INSTALL.md) document for complete information.
+
+Use `sudo make all` to run all the steps to prepare your custom image.
+
+You can manually extract and build your image:
 
 ```
 sudo cramfsck -x /tmp/cram mtd4-file
 sudo mkcramfs -e 0 -v -L /tmp/cram/ /tmp/cramfs.file
 ```
-
-You can also use `sudo make all` to run all the steps to prepare your custom image.
-
-Check [INSTALL](./INSTALL.md) document for more information.
 
 # Related
 

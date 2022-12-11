@@ -1,7 +1,6 @@
 #!/bin/sh
 
 [ -f "/mnt/mtd/passwd" ] && mount --bind /mnt/mtd/passwd /etc/passwd
-[ -f "/mnt/mtd/factory" ] && ( /usr/run-orig.sh; exit )
 [ -f "/mnt/mtd/TZ" ] && export TZ=$(cat /mnt/mtd/TZ)
 
 echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
@@ -19,6 +18,8 @@ if command -v dropbear >/dev/null; then
     # killall telnetd
   fi
 fi
+
+[ -f "/mnt/mtd/factory" ] && ( /usr/run-orig.sh; exit )
 
 mkdir -p /var/lock /var/run /var/fat32_0 /var/cloud
 cp -f /usr/cloud/states /var/cloud/states

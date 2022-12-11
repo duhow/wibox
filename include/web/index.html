@@ -77,7 +77,7 @@ ax.send();
 ax.onreadystatechange = function(){
 if(this.readyState==4){
 at="";
-if(!this.responseText){at="<tr><td>No calls available.</td></tr>";}
+if(!this.responseText || this.status!=200){at="<tr><td>No calls available.</td></tr>";}
 else{
 ad=this.responseText.split(/\r?\n|\r/);
 for(var ac=ad.length-1;ac>=Math.max(ad.length-15,0);ac--){

@@ -36,6 +36,9 @@ log "Starting MQTT listener"
 
 TOPIC=`mqtt_base_topic`
 
+# clear previous status before running
+mosquitto_pub ${MQTT_OPTS} -t "${TOPIC}" -r -n
+
 mosquitto_sub -v -k 300 --will-topic ${TOPIC} --will-payload offline --will-retain ${MQTT_OPTS} -t "${TOPIC}" -t "${TOPIC}/#" | while read -r line; do
   val=$(echo "$line" | awk '{print $2}' | tr '[:lower:]' '[:upper:]')
   case $line in

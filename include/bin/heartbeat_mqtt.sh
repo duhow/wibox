@@ -1,5 +1,6 @@
 #!/bin/sh
 
+LOCKFILE=/tmp/heartbeat.lock
 log(){ echo "$*" | tee /dev/kmsg; }
 
 WAIT=60
@@ -13,7 +14,7 @@ TOPIC=`mqtt_base_topic`
 
 STATUS=$(mosquitto_sub ${MQTT_OPTS} -I heartbeat -v -C 1 -t "${TOPIC}" -W ${TIMEOUT} | cut -d ' ' -f2)
 
-if [ "$STATUS" = "offline" ]; then
+if [ ! -f "$LOCKFILE" ] && [ "$STATUS" = "offline" ]; then
   log "Disconnected from MQTT. Rebooting in ${WAIT} seconds."
   wifi_led red
   sleep ${WAIT}

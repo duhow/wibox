@@ -2,6 +2,7 @@
 
 WEBFOLDER=/var/www
 SRCFOLDER=/usr/web
+PIDFILE=/var/run/httpd.pid
 
 mkdir -p ${WEBFOLDER}/cgi-bin
 
@@ -15,3 +16,6 @@ PORT=80
 netstat -ltn | grep -q ":${PORT} " && PORT=81
 
 busybox httpd -p ${PORT} -h ${WEBFOLDER}
+
+# create pid
+ps | grep "busybox httpd" | grep -v grep | awk '{print $1}' > ${PIDFILE}

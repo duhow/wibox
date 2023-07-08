@@ -13,10 +13,10 @@ ifconfig wlan0 down
 UDID=$(dd if=/dev/mtdblock6 skip=324 count=12 bs=1 2>/dev/null)
 if [ -z "$UDID" ]; then UDID=tdks00000000; fi
 
-# CHANGEME
+SSID="IDS7938${UDID:8:4}"
 PASSWORD=$UDID
 
-sed -ri "s/(ssid=).*/\1$UDID/" ${HOSTAPD_CONF}
+sed -ri "s/(ssid=).*/\1$SSID/" ${HOSTAPD_CONF}
 sed -ri "s/(wpa_passphrase=).*/\1$PASSWORD/" ${HOSTAPD_CONF}
 
 insmod /ko/extdrv/rtl8188fu.ko

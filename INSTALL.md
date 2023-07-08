@@ -85,6 +85,25 @@ ncat -vlp 8888 < release/latest
 nc ${YOUR_COMPUTER_IP} 8888 > /tmp/update.img
 ```
 
+## :exclamation: IMPORTANT: Set-up network
+
+Before flashing, you need to re-define your Wireless credentials to connect.
+This is because Sofia WiFi credentials are encrypted, and we cannot retrieve them at the moment.
+
+Create the following file in `/mnt/mtd/wpa_supplicant.conf` :
+
+```
+ctrl_interface=/var/run/wpa_supplicant
+ap_scan=1
+
+network={
+        ssid="CHANGE_WIFI_NAME"
+        psk="CHANGE_WIFI_PASSWORD"
+        scan_ssid=1
+        key_mgmt=WPA-PSK
+}
+```
+
 ## Flashing
 
 :warning: This step is not fully safe and may require having access to serial to reflash.

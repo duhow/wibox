@@ -6,6 +6,7 @@ ALARM_FILE=/mnt/mtd/alarm.log
 CODES_FILE=/usr/wibox_codes.txt
 PIDFILE=/tmp/listener.pid
 PIDFILE_MQTT=/tmp/listener_mqtt.pid
+CRONFILE=/var/spool/cron/crontabs/root
 MQTT_ENABLED=""
 CALL_OPEN_DOOR=""
 
@@ -22,6 +23,29 @@ reverse_code(){
 
 mqtt_ding(){ mosquitto_pub ${MQTT_OPTS} -t "`mqtt_base_topic`/ding" -m $1 & }
 
+# change workdir to script dir
+cd `dirname "$0"`
+source /usr/bin/gpio.sh
+
+if [ "$1" = "stop" ]; then
+  if [ ! -f "${PIDFILE}" ] || [ ! -e "/proc/`cat ${PIDFILE}`" ]; then
+    log "Listener was not running!"
+    exit 0
+  fi
+  kill `cat ${PIDFILE}` && rm -f ${PIDFILE} || log "Cannot close listener"
+  kill `cat ${PIDFILE_MQTT}` && rm -f ${PIDFILE_MQTT} || log "Cannot close listener MQTT"
+  killall -q head mosquitto_pub mosquitto_sub
+  wifi_led off
+  # remove mqtt cron checks
+  sed -i '/mqtt_wifi_stats/d' ${CRONFILE}
+  sed -i '/heartbeat_mqtt/d' ${CRONFILE}
+  if pgrep crond >/dev/null; then
+    killall crond
+    crond -b
+  fi
+  exit 0
+fi
+
 # Check running once
 if [ -f "${PIDFILE}" ]; then
   if [ -e "/proc/`cat ${PIDFILE}`" ]; then
@@ -37,10 +61,6 @@ fi
 echo "$$" > ${PIDFILE}
 
 log "Starting listener"
-
-# change workdir to script dir
-cd `dirname "$0"`
-source /usr/bin/gpio.sh
 
 which mosquitto_pub >/dev/null 2&>/dev/null
 if [ "$?" = 0 ]; then

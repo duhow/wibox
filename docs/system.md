@@ -301,3 +301,18 @@ add device 1: /dev/input/event0
     KEY (0001): 0000  0001  0003  0009  000b  000c  000d  000f 
                 0011  0019  001b  001d 
 ```
+
+## Secret
+
+There is a config file in `/mnt/mtd/Config/secret` that contains `base64` encoded secrets.
+
+- TD: deviceToken or token, a string split into 2 sections (last entry is in `TD5` key), with format `0:HooooV,1:5oooob,2:90000p,3:8ooook,4:50000K,5:8oooop`
+- TD5: See above, contains `,5:8oooop`
+- K1: key 1, alphanumeric 32 chars, similar to base64
+- K2: key 2, alphanumeric 32 chars
+- FD: fdStr or m_fdX, contains `Activated` or `NotActive`
+- VC: Verify Code, m_deviceVeryCode, m_OldDeviceVeryCode. Printed in QR hardware.
+- DVC: Device Verify Code, innerAuthCode or m_dVerifyCode. different key.
+- HVC: Hash Verify Code, m_HashDeviceVeryCode . Apparently a SHA256 hash string.
+- ASC: m_actsuccess ?? . value 1
+- RST: m_IsRest ?? . value 0

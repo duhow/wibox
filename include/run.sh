@@ -130,7 +130,7 @@ echo "IDS7938${UDID:8:4}" > /proc/sys/kernel/hostname
 
 /usr/bin/listener.sh &
 
-[ -f "/mnt/mtd/post.sh" ] && /mnt/mtd/post.sh
+[ -x "/mnt/mtd/post.sh" ] && /mnt/mtd/post.sh
 
 # remove lock if present
 rm -f /tmp/heartbeat.lock

@@ -41,9 +41,9 @@ sudo mkcramfs -e 0 -v -L /tmp/cram/ /tmp/cramfs.file
 
 Some content is provided from the following sources:
 
-https://linuch.pl/blog/fermax-wayfi-wideodomofon-hack-czesc-1  
-https://linuch.pl/blog/fermax-wayfi-wideodomofon-hack-czesc-2  
-https://linuch.pl/blog/fermax-wayfi-wideodomofon-hack-czesc-3  
+- [https://linuch.pl/blog/fermax-wayfi-wideodomofon-hack-czesc-1](https://web.archive.org/web/20211121234612/https://linuch.pl/blog/fermax-wayfi-wideodomofon-hack-czesc-1)  
+- [https://linuch.pl/blog/fermax-wayfi-wideodomofon-hack-czesc-2](https://web.archive.org/web/20211124125931/https://linuch.pl/blog/fermax-wayfi-wideodomofon-hack-czesc-2) 
+- [https://linuch.pl/blog/fermax-wayfi-wideodomofon-hack-czesc-3](https://web.archive.org/web/20211124125929/https://linuch.pl/blog/chinska-kamera-ip-blk510-i-reverse-engineering) 
 
 # Disclaimer
 

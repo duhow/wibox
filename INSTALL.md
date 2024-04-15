@@ -11,9 +11,11 @@ It is **highly recommended** to have serial access prepared, as it's your way to
 You can connect to the board via serial port enabled on `ttySGK2`, at baud rate `115200`.
 Ensure to **NOT** be using `hardware flow control` in your program, as it blocks input.  
 
-If you don't see any content after booting, enter U-boot settings and run the following:
+> [!TIP]
+> If you don't see any messages in serial after booting, probably you are running an updated firmware version.  
+> Enter U-boot settings and run the following:
 
-```
+```shell
 setenv consoledev 'ttySGK0'
 saveenv
 reset

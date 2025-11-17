@@ -19,17 +19,17 @@ echo -n {\""identifiers\"":[\""wibox_${MODEL}\""],\""connections\"":[[\""mac\"",
 setup_switch_message(){
 # topic, name, icon, availabilty_topic_root (false)
 TOPIC="`mqtt_base_topic`/$1"
-AVTOPIC="${TOPIC}"
-[ -n "$4" ] && AVTOPIC="`mqtt_base_topic`/$4"
-[ -n "$4" ] && [ "$4" = "true" ] && AVTOPIC="`mqtt_base_topic`"
-echo -n {\""command_topic\"": \""${TOPIC}\"", \""state_topic\"": \""${TOPIC}\"", \""availability_topic\"": \""${AVTOPIC}\"", \""icon\"": \""mdi:$3\"", \""name\"": \""`mqtt_base_name "$2"`\"", \""unique_id\"": \""`mqtt_base_uniqueid $1`\"", \""device\"": `setup_device_base`}
+AVTOPIC="`mqtt_base_topic`/availability"
+[ -n "$4" ] && [ "$4" != "false" ] && AVTOPIC="`mqtt_base_topic`/$4"
+[ -n "$4" ] && [ "$4" = "true" ] && AVTOPIC="`mqtt_base_topic`/availability"
+echo -n {\""command_topic\"": \""${TOPIC}\"", \""state_topic\"": \""${TOPIC}\"", \""availability_topic\"": \""${AVTOPIC}\"", \""payload_available\"": \""online\"", \""payload_not_available\"": \""offline\"", \""icon\"": \""mdi:$3\"", \""name\"": \""`mqtt_base_name "$2"`\"", \""unique_id\"": \""`mqtt_base_uniqueid $1`\"", \""device\"": `setup_device_base`}
 }
 
 setup_switch_opener_message(){
 # unique_id, name, icon
 TOPIC="`mqtt_base_topic`/door"
-AVTOPIC="`mqtt_base_topic`"
-echo -n {\""command_topic\"": \""${TOPIC}\"", \""state_topic\"": \""${TOPIC}\"", \""payload_on\"": \""online\"", \""payload_off\"": \""offline\"", \""availability_topic\"": \""${AVTOPIC}\"", \""icon\"": \""mdi:$3\"", \""name\"": \""`mqtt_base_name "$2"`\"", \""unique_id\"": \""`mqtt_base_uniqueid $1`\"", \""device\"": `setup_device_base`}
+AVTOPIC="`mqtt_base_topic`/availability"
+echo -n {\""command_topic\"": \""${TOPIC}\"", \""state_topic\"": \""${TOPIC}\"", \""payload_on\"": \""online\"", \""payload_off\"": \""offline\"", \""availability_topic\"": \""${AVTOPIC}\"", \""payload_available\"": \""online\"", \""payload_not_available\"": \""offline\"", \""icon\"": \""mdi:$3\"", \""name\"": \""`mqtt_base_name "$2"`\"", \""unique_id\"": \""`mqtt_base_uniqueid $1`\"", \""device\"": `setup_device_base`}
 }
 
 setup_device_automation_message(){
@@ -41,22 +41,22 @@ echo -n {\""automation_type\"":\""trigger\"", \""type\"":\""button_${1}_press\""
 setup_binary_sensor_message(){
 # topic, name, device_class, off_delay
 TOPIC="`mqtt_base_topic`/$1"
-AVTOPIC="`mqtt_base_topic`"
-echo -n {\""state_topic\"": \""${TOPIC}\"", \""availability_topic\"": \""${AVTOPIC}\"", \""device_class\"": \""$3\"", \""off_delay\"": $4, \""name\"": \""`mqtt_base_name "$2"`\"", \""unique_id\"": \""`mqtt_base_uniqueid $1`\"", \""device\"": `setup_device_base`}
+AVTOPIC="`mqtt_base_topic`/availability"
+echo -n {\""state_topic\"": \""${TOPIC}\"", \""availability_topic\"": \""${AVTOPIC}\"", \""payload_available\"": \""online\"", \""payload_not_available\"": \""offline\"", \""device_class\"": \""$3\"", \""off_delay\"": $4, \""name\"": \""`mqtt_base_name "$2"`\"", \""unique_id\"": \""`mqtt_base_uniqueid $1`\"", \""device\"": `setup_device_base`}
 }
 
 setup_sensor_message(){
 # topic, name, device_class, icon
 TOPIC="`mqtt_base_topic`/$1"
-AVTOPIC="`mqtt_base_topic`"
-echo -n {\""state_topic\"": \""${TOPIC}\"", \""availability_topic\"": \""${AVTOPIC}\"", \""device_class\"": \""$3\"", \""icon\"": \""mdi:$4\"", \""name\"": \""`mqtt_base_name "$2"`\"", \""unique_id\"": \""`mqtt_base_uniqueid $1`\"", \""device\"": `setup_device_base`}
+AVTOPIC="`mqtt_base_topic`/availability"
+echo -n {\""state_topic\"": \""${TOPIC}\"", \""availability_topic\"": \""${AVTOPIC}\"", \""payload_available\"": \""online\"", \""payload_not_available\"": \""offline\"", \""device_class\"": \""$3\"", \""icon\"": \""mdi:$4\"", \""name\"": \""`mqtt_base_name "$2"`\"", \""unique_id\"": \""`mqtt_base_uniqueid $1`\"", \""device\"": `setup_device_base`}
 }
 
 setup_sensor_advanced_message(){
 # topic, name, device_class, icon, value_template, unit_of_measurement, json_attributes_topic
 TOPIC="`mqtt_base_topic`/$1"
-AVTOPIC="`mqtt_base_topic`"
-echo -n {\""state_topic\"": \""${TOPIC}\"", \""availability_topic\"": \""${AVTOPIC}\"", \""device_class\"": \""$3\"", \""icon\"": \""mdi:$4\"", \""name\"": \""`mqtt_base_name "$2"`\"", \""unique_id\"": \""`mqtt_base_uniqueid $1`\"", \""value_template\"": \""$5\"", \""unit_of_measurement\"": \""$6\"", \""json_attributes_topic\"": \""`mqtt_base_topic`/$7\"", \""device\"": `setup_device_base`}
+AVTOPIC="`mqtt_base_topic`/availability"
+echo -n {\""state_topic\"": \""${TOPIC}\"", \""availability_topic\"": \""${AVTOPIC}\"", \""payload_available\"": \""online\"", \""payload_not_available\"": \""offline\"", \""device_class\"": \""$3\"", \""icon\"": \""mdi:$4\"", \""name\"": \""`mqtt_base_name "$2"`\"", \""unique_id\"": \""`mqtt_base_uniqueid $1`\"", \""value_template\"": \""$5\"", \""unit_of_measurement\"": \""$6\"", \""json_attributes_topic\"": \""`mqtt_base_topic`/$7\"", \""device\"": `setup_device_base`}
 }
 
 mqtt_send(){ mosquitto_pub ${MQTT_OPTS} -t "${MTOPIC}" -m "${MDATA}"; }

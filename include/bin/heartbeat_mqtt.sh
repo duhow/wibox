@@ -73,10 +73,10 @@ fi
 
 # Publish status if determined
 if [ -n "$STATUS" ]; then
-  log "Publishing status: ${STATUS} with retain flag"
-  # Publish to main topic with retain flag for persistence
-  mosquitto_pub ${MQTT_OPTS} -t "${TOPIC}" -m ${STATUS} -r
-  # Publish to separate availability topic for Home Assistant (HA best practice)
+  log "Publishing status: ${STATUS}"
+  # Publish to main topic without retain (used for events/commands)
+  mosquitto_pub ${MQTT_OPTS} -t "${TOPIC}" -m ${STATUS}
+  # Publish to availability topic with retain (HA best practice for availability)
   mosquitto_pub ${MQTT_OPTS} -t "${TOPIC}/availability" -m ${STATUS} -r
   
   # Set LED status

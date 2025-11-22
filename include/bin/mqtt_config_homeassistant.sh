@@ -17,11 +17,9 @@ echo -n {\""identifiers\"":[\""wibox_${MODEL}\""],\""connections\"":[[\""mac\"",
 }
 
 setup_switch_message(){
-# topic, name, icon, availabilty_topic_root (false)
+# topic, name, icon (4th parameter ignored - always use /availability)
 TOPIC="`mqtt_base_topic`/$1"
 AVTOPIC="`mqtt_base_topic`/availability"
-[ -n "$4" ] && [ "$4" != "false" ] && AVTOPIC="`mqtt_base_topic`/$4"
-[ -n "$4" ] && [ "$4" = "true" ] && AVTOPIC="`mqtt_base_topic`/availability"
 echo -n {\""command_topic\"": \""${TOPIC}\"", \""state_topic\"": \""${TOPIC}\"", \""availability_topic\"": \""${AVTOPIC}\"", \""payload_available\"": \""online\"", \""payload_not_available\"": \""offline\"", \""icon\"": \""mdi:$3\"", \""name\"": \""`mqtt_base_name "$2"`\"", \""unique_id\"": \""`mqtt_base_uniqueid $1`\"", \""device\"": `setup_device_base`}
 }
 

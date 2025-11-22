@@ -39,7 +39,15 @@ TOPIC=`mqtt_base_topic`
 # clear previous status before running
 mosquitto_pub ${MQTT_OPTS} -t "${TOPIC}" -r -n
 
-mosquitto_sub -v -k 300 --will-topic ${TOPIC} --will-payload offline --will-retain ${MQTT_OPTS} -t "${TOPIC}" -t "${TOPIC}/#" | while read -r line; do
+# Publish initial online status
+# Main topic: without retain (used for events/commands)
+# Availability topic: with retain + Last Will (HA best practice)
+mosquitto_pub ${MQTT_OPTS} -t "${TOPIC}" -m online
+mosquitto_pub ${MQTT_OPTS} -t "${TOPIC}/availability" -m online -r
+
+# Setup Last Will on availability topic (HA best practice)
+# When connection drops, MQTT broker will publish offline to availability topic
+mosquitto_sub -v -k 300 --will-topic "${TOPIC}/availability" --will-payload offline --will-retain ${MQTT_OPTS} -t "${TOPIC}" -t "${TOPIC}/#" | while read -r line; do
   val=$(echo "$line" | awk '{print $2}' | tr '[:lower:]' '[:upper:]')
   case $line in
     "${TOPIC}/door/set"*)
@@ -89,8 +97,14 @@ mosquitto_sub -v -k 300 --will-topic ${TOPIC} --will-payload offline --will-reta
     "${TOPIC} "*)
       if [ "$val" = "CONFIG" ]; then
         STATUS_ONLINE=1
-        log "Connected successfully, configuring Home Assistant MQTT device"
-        ./mqtt_config_homeassistant.sh && mosquitto_pub ${MQTT_OPTS} -t "${TOPIC}" -m online
+        log "Received config command, running setup"
+        # Use mqtt_config from /mnt/mtd/ if available, otherwise use /usr/bin/
+        if [ -f "/mnt/mtd/mqtt_config_homeassistant.sh" ]; then
+          /mnt/mtd/mqtt_config_homeassistant.sh && mosquitto_pub ${MQTT_OPTS} -t "${TOPIC}/availability" -m online -r
+        else
+          ./mqtt_config_homeassistant.sh && mosquitto_pub ${MQTT_OPTS} -t "${TOPIC}/availability" -m online -r
+        fi
+        
         if ! grep -q "mqtt_wifi_stats.sh" ${CRONFILE}; then
           log "Configuring wifi stats reporter and restarting cron"
           echo "*/${WIFISTATS_CRON_MIN} * * * * /usr/bin/mqtt_wifi_stats.sh" >> ${CRONFILE}
@@ -98,7 +112,6 @@ mosquitto_sub -v -k 300 --will-topic ${TOPIC} --will-payload offline --will-reta
           killall crond
           crond -b
         fi
-
       elif [ "$val" = "OFFLINE" ] && [ -n "${STATUS_ONLINE}" ]; then
         log "Disconnected from MQTT. Rebooting in 60 seconds."
         sleep 60
